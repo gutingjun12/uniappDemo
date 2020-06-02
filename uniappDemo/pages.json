@@ -1,0 +1,53 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/home",
+			"style": {}
+		}, {
+			"path": "pages/shop/shop",
+			"style": {}
+		}, {
+			"path": "pages/add/add",
+			"style": {}
+		}, {
+			"path": "pages/message/message",
+			"style": {}
+		}, {
+			"path": "pages/personal/personal",
+			"style": {}
+		}, {
+			"path": "pages/detail/detail",
+			"style": {}
+		}
+	],
+	"globalStyle": {
+		"navigationStyle": "custom"
+	},
+	"tabBar": {
+		"color": "#666666",
+		"selectedColor": "#333333",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/shop/shop",
+				"text": "商城"
+			},
+			{
+				"pagePath": "pages/add/add",
+				"iconPath": "static/add.png",
+				"selectedIconPath": "static/add.png"
+			},
+			{
+				"pagePath": "pages/message/message",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/personal/personal",
+				"text": "我的"
+			}
+		]
+	}
+}
