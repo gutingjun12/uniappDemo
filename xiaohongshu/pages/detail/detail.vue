@@ -71,7 +71,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 底部固定 -->
 		<view class="fixed-part">
 			<!-- 输入框 -->
@@ -83,6 +83,7 @@
 			<!-- 评论 -->
 			<view class="item">◆666</view>
 		</view>
+		
 		
 	</view>
 </template>

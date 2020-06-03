@@ -142,12 +142,19 @@
 			</view>
 
 		</view>
+		
+		<!-- 底部导航 -->
+		<tabBar :active="0"></tabBar>
 
 	</view>
 </template>
 
 <script>
+	import tabBar from '../../components/tabBar/tabBar.vue'
 	export default {
+		comments: {
+			tabBar
+		},
 		data() {
 			return {
 
@@ -238,7 +245,7 @@
 		}
 
 		.main {
-			padding: 212rpx 10rpx 16rpx;
+			padding: 212rpx 10rpx 160rpx;
 
 			.filter {
 				white-space: nowrap;
