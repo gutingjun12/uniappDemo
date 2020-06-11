@@ -18,6 +18,18 @@
 		}, {
 			"path": "pages/detail/detail",
 			"style": {}
+		}, {
+			"path": "pages/likeList/likeList",
+			"style": {}
+		}, {
+			"path": "pages/followList/followList",
+			"style": {}
+		}, {
+			"path": "pages/commentList/commentList",
+			"style": {}
+		}, {
+			"path": "pages/searchList/searchList",
+			"style": {}
 		}
 	],
 	"globalStyle": {

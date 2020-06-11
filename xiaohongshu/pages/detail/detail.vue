@@ -5,7 +5,7 @@
 			<!-- 顶部左边 -->
 			<view class="l">
 				<!-- 返回按钮 -->
-				<view class="back-btn">&lt;</view>
+				<view class="back-btn" @click="back">&lt;</view>
 				<!-- 头像 -->
 				<view class="avatar">
 					<img src="/static/logo.png" alt="">
@@ -16,7 +16,7 @@
 			<!-- 顶部右边 -->
 			<view class="r">
 				<!-- 关注按钮 -->
-				<view class="follow">关注</view>
+				<button type="warn" size="mini" plain="true" class="follow">关注</button>
 			</view>
 		</view>
 		<!-- 主体内容 -->
@@ -56,6 +56,19 @@
 					</view>
 					<!-- 内容 -->
 					<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
+					<!-- 回复区 -->
+					<view class="reply">
+						<!-- 用户信息 -->
+						<view class="user-info">
+							<view class="avatar">
+								<img src="/static/logo.png" alt="">
+							</view>
+							<view class="user-name">别人哈哈哈</view>
+							<view class="like">❤20</view>
+						</view>
+						<!-- 内容 -->
+						<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
+					</view>
 				</view>
 				<view class="item">
 					<!-- 用户信息 -->
@@ -96,7 +109,9 @@
 			}
 		},
 		methods: {
-
+			back() {
+				uni.navigateBack()
+			}
 		}
 	}
 </script>
@@ -107,10 +122,16 @@
 		background: #fff;
 
 		.top {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			width: 100%;
+			height: 100rpx;
 			display: flex;
 			justify-content: space-between;
 			background: #FFFFFF;
-			padding: 20rpx;
+			padding: 0 20rpx;
 			border-bottom: 2rpx solid $uni-border-color;
 
 			.l {
@@ -150,17 +171,16 @@
 				align-items: center;
 
 				.follow {
-					padding: 4rpx 12rpx;
-					border: 2rpx solid $uni-color-theme;
-					border-radius: 10rpx;
-					color: $uni-color-theme;
 					font-size: $uni-font-size-sm;
 				}
 			}
 		}
 
 		.main {
+			margin-top: 100rpx;
+			
 			.img-box {
+				
 				.swiper {
 					height: 500rpx;
 
@@ -247,6 +267,13 @@
 							color: $uni-text-color-grey;
 							margin-left: 20rpx;
 						}
+					}
+					.reply {
+						margin: 20rpx 0 0 50rpx;
+						.avatar {
+							width: 40rpx;
+							height: 40rpx;
+						}	
 					}
 				}
 			}

@@ -2,17 +2,20 @@
 	<view class="message">
 		<!-- 顶部菜单 -->
 		<view class="top">
-			<view class="item">
+			<view class="item" @click="goPage(0)">
 				<img src="static/logo.png" alt="">
 				<view class="text">赞和收藏</view>
+				<text class="badge">12</text>
 			</view>
-			<view class="item">
+			<view class="item" @click="goPage(1)">
 				<img src="static/logo.png" alt="">
 				<view class="text">新增关注</view>
+				<text class="badge">2</text>
 			</view>
-			<view class="item">
+			<view class="item" @click="goPage(2)">
 				<img src="static/logo.png" alt="">
 				<view class="text">评论和@我</view>
+				<text class="badge">3</text>
 			</view>
 		</view>
 
@@ -54,7 +57,24 @@
 			}
 		},
 		methods: {
-
+			//跳转页面
+			goPage(index) {
+				let url = ''
+				switch (index) {
+					case 0:
+						url = '../likeList/likeList'
+						break;
+					case 1:
+						url = '../followList/followList'
+						break;
+					case 2:
+						url = '../commentList/commentList'
+						break;	
+				}
+				uni.navigateTo({
+					url: url
+				})
+			},
 		}
 	}
 </script>
@@ -63,18 +83,31 @@
 	.message {
 		.top {
 			display: flex;
+			justify-content: space-around;
 			align-items: center;
 			height: 260rpx;
 			background: #fff;
 			margin-bottom: 20rpx;
 
 			.item {
-				flex: 1;
+				position: relative;
+				width: 144rpx;
 				text-align: center;
 
 				img {
 					width: 80rpx;
 					margin: 0 0 14rpx 0;
+				}
+
+				.badge {
+					position: absolute;
+					top: -20rpx;
+					right: 8rpx;
+					min-width: 36rpx;
+					border-radius: $uni-border-radius-lg;
+					font-size: $uni-font-size-sm;
+					background: $uni-color-theme;
+					color: #fff;
 				}
 			}
 		}
@@ -88,6 +121,7 @@
 				border-bottom: 2rpx solid $uni-border-color;
 
 				.avatar {
+					position: relative;
 					width: 90rpx;
 					height: 90rpx;
 					border-radius: $uni-border-radius-circle;

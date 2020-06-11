@@ -9,7 +9,7 @@
 			</view>
 			<!-- 搜索 -->
 			<view class="top-search">
-				<view class="input">
+				<view class="input" @click="goToSearch">
 					<icon type="search" size="14" color="#808080" />多芬洗发水</view>
 			</view>
 		</view>
@@ -18,20 +18,20 @@
 		<view class="main">
 			<!-- 筛选 -->
 			<view class="filter">
-				<view class="item">美食</view>
-				<view class="item">家居家装</view>
-				<view class="item">彩妆</view>
-				<view class="item">母婴</view>
-				<view class="item">运动健康</view>
-				<view class="item">情感</view>
-				<view class="item">时尚</view>
-				<view class="item">游戏电竞</view>
-				<view class="item">萌宠</view>
-				<view class="item">发型</view>
+				<button class="item">美食</button>
+				<button class="item">家居家装</button>
+				<button class="item">彩妆</button>
+				<button class="item">母婴</button>
+				<button class="item">运动健康</button>
+				<button class="item">情感</button>
+				<button class="item">时尚</button>
+				<button class="item">游戏电竞</button>
+				<button class="item">萌宠</button>
+				<button class="item">发型</button>
 			</view>
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item">
+				<view class="item" @click="goToDetail">
 					<!-- 图片或视频 -->
 					<view class="img-box">
 						<img src="../../static/logo.png" alt="">
@@ -164,7 +164,18 @@
 
 		},
 		methods: {
-
+			// 跳转到搜索页
+			goToSearch() {
+				uni.navigateTo({
+					url: '../searchList/searchList'
+				})
+			},
+			// 跳转到详情页
+			goToDetail() {
+				uni.navigateTo({
+					url: '../detail/detail'
+				})
+			}
 		}
 	}
 </script>
@@ -255,10 +266,8 @@
 				.item {
 					display: inline-block;
 					margin-right: 20rpx;
-					background: $uni-bg-color;
-					border: 2rpx solid $uni-border-color;
-					padding: 10rpx;
-					border-radius: $uni-border-radius-sm;
+					background: #fff;
+					font-size: $uni-font-size-base;
 
 					&:last-of-type {
 						margin-right: 0;

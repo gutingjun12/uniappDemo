@@ -33,7 +33,7 @@
 					</view>
 				</view>
 				<!-- 编辑 -->
-				<view class="r-edit">编辑资料</view>
+				<button class="r-edit">编辑资料</button>
 			</view>
 		</view>
 
@@ -167,10 +167,8 @@
 				}
 
 				.r-edit {
-					padding: 10rpx 0;
-					border: 2rpx solid $uni-border-color;
-					border-radius: $uni-border-radius-lg;
-					text-align: center;
+					font-size: $uni-font-size-base;
+					background: #fff;
 				}
 			}
 		}
