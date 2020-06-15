@@ -15,7 +15,7 @@
 		<view class="info">
 			<!-- 头像 -->
 			<view class="avatar">
-				<img src="static/logo.png" alt="">
+				<img src="../../static/logo.png" alt="">
 			</view>
 			<view class="r">
 				<view class="r-top">

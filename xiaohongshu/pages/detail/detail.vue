@@ -5,7 +5,7 @@
 			<!-- 顶部左边 -->
 			<view class="l">
 				<!-- 返回按钮 -->
-				<view class="back-btn" @click="back">&lt;</view>
+				<view class="back-btn" @click="back"><i class="iconfont iconleft"></i></view>
 				<!-- 头像 -->
 				<view class="avatar">
 					<img src="/static/logo.png" alt="">
@@ -139,8 +139,6 @@
 				align-items: center;
 
 				.back-btn {
-					font-family: "宋体";
-					font-size: 40rpx;
 					font-weight: 700;
 					color: $uni-text-color-grey;
 				}

@@ -4,13 +4,13 @@
 		<view class="top">
 			<!-- 顶部切换 -->
 			<view class="top-tab">
-				<view class="item">关注</view>
-				<view class="item active">发现</view>
+				<view :class="tabActive==0?'item active':'item'" @click="changeTab(0)">关注</view>
+				<view :class="tabActive==1?'item active':'item'" @click="changeTab(1)">发现</view>
 			</view>
 			<!-- 搜索 -->
 			<view class="top-search">
 				<view class="input" @click="goToSearch">
-					<icon type="search" size="14" color="#808080" />多芬洗发水</view>
+					<i class="iconfont iconsearch"></i>多芬洗发水</view>
 			</view>
 		</view>
 
@@ -18,16 +18,7 @@
 		<view class="main">
 			<!-- 筛选 -->
 			<view class="filter">
-				<button class="item">美食</button>
-				<button class="item">家居家装</button>
-				<button class="item">彩妆</button>
-				<button class="item">母婴</button>
-				<button class="item">运动健康</button>
-				<button class="item">情感</button>
-				<button class="item">时尚</button>
-				<button class="item">游戏电竞</button>
-				<button class="item">萌宠</button>
-				<button class="item">发型</button>
+				<button class="item" v-for="(item,index) in categoryArr" :key="index">{{item.categoryName}}</button>
 			</view>
 			<!-- 列表 -->
 			<view class="list">
@@ -46,7 +37,7 @@
 							</view>
 							<view class="user-name">用户哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 				<view class="item">
@@ -64,7 +55,7 @@
 							</view>
 							<view class="user-name">用户哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 				<view class="item">
@@ -82,7 +73,7 @@
 							</view>
 							<view class="user-name">用户哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 				<view class="item">
@@ -100,7 +91,7 @@
 							</view>
 							<view class="user-name">用户哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 				<view class="item">
@@ -118,7 +109,7 @@
 							</view>
 							<view class="user-name">用户哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 				<view class="item">
@@ -136,13 +127,13 @@
 							</view>
 							<view class="user-name">用户哈哈哈</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>400</view>
 					</view>
 				</view>
 			</view>
 
 		</view>
-		
+
 		<!-- 底部导航 -->
 		<tabBar :active="0"></tabBar>
 
@@ -157,13 +148,35 @@
 		},
 		data() {
 			return {
-
+				tabActive: 1, //0--关注  1--发现
+				categoryArr: [], //分类
 			}
 		},
 		onLoad() {
-
+			const that = this
+			that.getClass()
 		},
 		methods: {
+			//切换tab
+			changeTab(num) {
+				const that = this
+				that.tabActive = num
+			},
+			//获取分类
+			getClass() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: 'http://192.168.3.45:7001/getCategory',
+					data: {},
+					success: (res) => {
+						that.categoryArr = res.data.data
+					},
+					fail: (res) => {
+						console.log('服务异常，请稍后重试')
+					}
+				});
+			},
 			// 跳转到搜索页
 			goToSearch() {
 				uni.navigateTo({
@@ -247,8 +260,7 @@
 					background: $uni-bg-color-grey;
 					border-radius: $uni-border-radius-lg;
 
-					uni-icon {
-						vertical-align: middle;
+					i {
 						margin-right: 12rpx;
 					}
 				}
@@ -276,8 +288,8 @@
 			}
 
 			.list {
-				 column-count: 2;
-				 column-gap: 10rpx;
+				column-count: 2;
+				column-gap: 10rpx;
 
 				.item {
 					break-inside: avoid;
@@ -308,12 +320,14 @@
 					.user-info {
 						display: flex;
 						justify-content: space-between;
+						align-items: center;
 						padding: 12rpx;
 						font-size: $uni-font-size-sm;
 						color: $uni-text-color-second;
 
 						.l {
 							display: inline-flex;
+
 							.avatar {
 								width: 38rpx;
 								height: 38rpx;
@@ -325,6 +339,7 @@
 									width: 100%;
 								}
 							}
+
 							.user-name {
 								width: 160rpx;
 								overflow: hidden;
@@ -332,6 +347,7 @@
 								white-space: nowrap;
 							}
 						}
+
 						.r {
 							color: $uni-text-color-grey;
 						}

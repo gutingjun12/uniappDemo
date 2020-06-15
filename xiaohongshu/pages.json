@@ -30,12 +30,15 @@
 		}, {
 			"path": "pages/searchList/searchList",
 			"style": {}
+		}, {
+			"path": "pages/login/login",
+			"style": {}
 		}
 	],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},
 	"tabBar": {
-
+		
 	}
 }

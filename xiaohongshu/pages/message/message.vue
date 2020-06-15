@@ -3,17 +3,17 @@
 		<!-- 顶部菜单 -->
 		<view class="top">
 			<view class="item" @click="goPage(0)">
-				<img src="static/logo.png" alt="">
+				<img src="../../static/logo.png" alt="">
 				<view class="text">赞和收藏</view>
 				<text class="badge">12</text>
 			</view>
 			<view class="item" @click="goPage(1)">
-				<img src="static/logo.png" alt="">
+				<img src="../../static/logo.png" alt="">
 				<view class="text">新增关注</view>
 				<text class="badge">2</text>
 			</view>
 			<view class="item" @click="goPage(2)">
-				<img src="static/logo.png" alt="">
+				<img src="../../static/logo.png" alt="">
 				<view class="text">评论和@我</view>
 				<text class="badge">3</text>
 			</view>
@@ -24,7 +24,7 @@
 			<view class="item">
 				<!-- 头像 -->
 				<view class="avatar">
-					<img src="static/logo.png" alt="">
+					<img src="../../static/logo.png" alt="">
 				</view>
 				<!-- 内容区域 -->
 				<view class="content">

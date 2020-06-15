@@ -3,7 +3,7 @@
 		<!-- 左边 -->
 		<view class="item l" @click="back">
 			<!-- 返回按钮 -->
-			<view class="back-btn">&lt;</view>
+			<view class="back-btn"><i class="iconfont iconleft"></i></view>
 		</view>
 		<!-- 中间 -->
 		<view class="item m">
@@ -53,8 +53,6 @@
 
 			&.l {
 				.back-btn {
-					font-family: "宋体";
-					font-size: 40rpx;
 					font-weight: 700;
 					color: $uni-text-color-grey;
 				}
