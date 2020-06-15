@@ -5,6 +5,6 @@ module.exports = app => {
   const UserSchema = new Schema({
     name: { type: String },
     age: { type: Number }
-  });
+  },{versionKey:false});
   return mongoose.model('User', UserSchema, 'users');
 };
