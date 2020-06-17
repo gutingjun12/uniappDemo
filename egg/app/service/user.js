@@ -3,16 +3,18 @@
 const Service = require('egg').Service;
 
 class UserService extends Service {
-	async getUser() {
+	// 通过手机号查找用户
+	async findByPhone(phone) {
 		const { ctx } = this;
-		return await ctx.model.User.find({});
+		return await ctx.model.User.find({'phone': phone});
 	}
 
-	// async addUser(obj) {
-	// 	const { ctx } = this;
-	// 	var data = new ctx.model.User(obj);
-	// 	data.save();
-	// }
+	//添加用户
+	async addUser(obj) {
+		const { ctx } = this;
+		var data = new ctx.model.User(obj);
+		data.save();
+	}
 
 	// async removeUser(obj) {
 	// 	const { ctx } = this;

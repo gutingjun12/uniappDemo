@@ -23,15 +23,37 @@ module.exports = appInfo => {
 		// myAppName: 'egg',
 	};
 
-  // 连接mongodb的配置
-  config.mongoose = {
-    client: {
-      url: 'mongodb://127.0.0.1/xiaohongshu',
-      options: {
-				
+	// 关闭csrf
+	config.security = {
+		csrf: {
+			enable: false,
+			ignoreJSON: true,
+		},
+		// 白名单
+		domainWhiteList: ['http://localhost:8080'],
+	};
+	
+	// 允许规则
+	config.cors = {
+	  allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+	};
+	
+	//配置上传
+	config.multipart = {
+	  fileSize: '50mb',
+	  mode: 'stream',
+	  fileExtensions: ['.xls', '.txt'], // 扩展几种上传的文件格式
+	};
+
+	// 连接mongodb的配置
+	config.mongoose = {
+		client: {
+			url: 'mongodb://127.0.0.1/xiaohongshu',
+			options: {
+
 			},
-    },
-  };
+		},
+	};
 
 
 	return {

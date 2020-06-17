@@ -5,8 +5,8 @@
 		<view class="top">
 			<view class="item"></view>
 			<view class="item">
-				<view class="user-name">哈哈哈哈</view>
-				<view class="code">小红书号：123456</view>
+				<view class="user-name">{{userInfo.name}}</view>
+				<!-- <view class="code">小红书号：123456</view> -->
 			</view>
 			<view class="item"></view>
 		</view>
@@ -15,20 +15,20 @@
 		<view class="info">
 			<!-- 头像 -->
 			<view class="avatar">
-				<img src="../../static/logo.png" alt="">
+				<img :src="userInfo.avatar" alt="">
 			</view>
 			<view class="r">
 				<view class="r-top">
 					<view class="item">
-						<view class="num">100</view>
+						<view class="num">{{userInfo.follow}}</view>
 						<view class="text">关注</view>
 					</view>
 					<view class="item">
-						<view class="num">100</view>
+						<view class="num">{{userInfo.fans}}</view>
 						<view class="text">粉丝</view>
 					</view>
 					<view class="item">
-						<view class="num">100</view>
+						<view class="num">{{userInfo.likedAndCollected}}</view>
 						<view class="text">获赞与收藏</view>
 					</view>
 				</view>
@@ -39,8 +39,8 @@
 
 		<!-- 其他信息 -->
 		<view class="other-info">
-			<text class="item female">女</text>
-			<text class="item">广东广州</text>
+			<text :class="userInfo.sex==0?'item male':'item female'">{{userInfo.sex==0?'男':'女'}}</text>
+			<text class="item">{{userInfo.area}}</text>
 		</view>
 
 		<!-- 切换导航栏 -->
@@ -89,8 +89,14 @@
 		},
 		data() {
 			return {
-
+				userInfo: {} //用户信息
 			}
+		},
+		onLoad() {
+			const that = this
+			let userInfo = uni.getStorageSync('userInfo')
+			that.userInfo = JSON.parse(userInfo)
+
 		},
 		methods: {
 
@@ -181,7 +187,11 @@
 
 			.item {
 				margin-right: 20rpx;
-
+				
+				&.male {
+					color: #1e90ff;
+				}
+				
 				&.female {
 					color: #ff69b4;
 				}
@@ -214,7 +224,7 @@
 
 		.main {
 			padding: 20rpx 10rpx;
-			
+
 			.list {
 				column-count: 2;
 				column-gap: 10rpx;

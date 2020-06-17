@@ -1,12 +1,20 @@
 <template>
 	<view class="tabBar">
-		<view :class="active==0?'active item':'item'" @click="goPage(0)">首页<text class="red-dot">●</text></view>
-		<view :class="active==1?'active item':'item'" @click="goPage(1)">商城<text class="red-dot">●</text></view>
+		<view :class="active==0?'active item':'item'" @click="goPage(0)">首页
+			<!-- <text class="red-dot">●</text> -->
+		</view>
+		<view :class="active==1?'active item':'item'" @click="goPage(1)">商城
+			<!-- <text class="red-dot">●</text> -->
+		</view>
 		<view class="item" @click="goPage(2)">
 			<img src="../../static/add.png" alt="">
 		</view>
-		<view :class="active==3?'active item':'item'" @click="goPage(3)">消息<text class="red-dot">●</text></view>
-		<view :class="active==4?'active item':'item'" @click="goPage(4)">我的<text class="red-dot">●</text></view>
+		<view :class="active==3?'active item':'item'" @click="goPage(3)">消息
+			<!-- <text class="red-dot">●</text> -->
+		</view>
+		<view :class="active==4?'active item':'item'" @click="goPage(4)">我的
+			<!-- <text class="red-dot">●</text> -->
+		</view>
 	</view>
 </template>
 
@@ -30,14 +38,14 @@
 						path = '../../pages/shop/shop'
 						break;
 					case 2:
-						path = '../../pages/add/add'
+						path = uni.getStorageSync('userInfo') ? '../../pages/add/add' : '../../pages/login/login'
 						break;
 					case 3:
-						path = '../../pages/message/message'
+						path = uni.getStorageSync('userInfo') ? '../../pages/message/message' : '../../pages/login/login'
 						break;
 					case 4:
-						path = '../../pages/personal/personal'
-						break;				
+						path = uni.getStorageSync('userInfo') ? '../../pages/personal/personal' : '../../pages/login/login'
+						break;
 				}
 				uni.reLaunch({
 					url: path
