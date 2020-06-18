@@ -9,7 +9,7 @@ module.exports = app => {
     title: { type: String },
     imgArr: { type: Array },
 		content: { type: String },
-		createDate: { type: Date,default: Date.now },
+		createDate: { type: String, default: Date.now },
 		liked: {type: Number, default: 0},
 		collected: {type: Number, default: 0},
 		commentNum: {type: Number, default: 0}

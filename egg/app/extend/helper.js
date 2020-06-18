@@ -15,7 +15,7 @@ module.exports = {
 		// this.ctx => context 对象
 		// this.app => application 对象
 
-		// 格式化日期 param -- 时间戳
+		// 格式化日期 param
 		return sd.format(param, 'YYYY-MM-DD HH:mm:ss');
 	},
 	getHelperData() {

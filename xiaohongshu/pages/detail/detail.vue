@@ -206,6 +206,7 @@
 			margin-top: 100rpx;
 			
 			.img-box {
+				border-bottom: 2rpx solid $uni-border-color;
 				
 				.swiper {
 					height: 500rpx;
@@ -256,7 +257,7 @@
 			.comment-list {
 				.item {
 					padding: 30rpx 0;
-					border-bottom: 2rpx solid #eee;
+					border-bottom: 2rpx solid $uni-border-color;
 
 					.user-info {
 						display: flex;
@@ -321,7 +322,7 @@
 				padding: 10rpx;
 				border-radius: $uni-border-radius-lg;
 				font-size: $uni-font-size-sm;
-				border: 2rpx solid #eee;
+				border: 2rpx solid $uni-border-color;
 				background: $uni-bg-color-grey;
 			}
 			.item {

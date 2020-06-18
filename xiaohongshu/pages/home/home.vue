@@ -236,7 +236,7 @@
 						justify-content: center;
 						align-items: center;
 						width: 100%;
-						border: 2rpx solid $uni-border-color;
+						border-bottom: 2rpx solid $uni-border-color;
 
 						img {
 							max-width: 100%;
