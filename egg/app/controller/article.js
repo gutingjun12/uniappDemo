@@ -55,6 +55,7 @@ class ArticleController extends Controller {
 		
 		let articleId = ctx.app.mongoose.Types.ObjectId(ctx.query.articleId);
 		let res = await ctx.service.article.findByArticleId(articleId);
+		res.createDate = await ctx.helper.formatTime(res.createDate);
 		ctx.body = {'data': res};
 	
 	}
