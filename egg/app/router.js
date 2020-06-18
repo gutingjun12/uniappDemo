@@ -20,7 +20,7 @@ module.exports = app => {
 	//用户登录
 	router.post('/login', controller.user.login);
 	// 新增用户
-	router.post('/addUser', controller.user.addUser);
+	// router.post('/addUser', controller.user.addUser);
 
 	// 分类
 	router.get('/getCategory', controller.category.getCategory);
@@ -31,5 +31,11 @@ module.exports = app => {
 	/* 文章 */
 	//添加
 	router.post('/addArticle', controller.article.add);
+	//查找所有文章
+	router.get('/findAllArticles', controller.article.findAll);
+	//通过用户id查找文章
+	router.get('/findArticlesByUserId', controller.article.findByUserId);
+	//通过文章id查找文章
+	router.get('/findByArticleId', controller.article.findByArticleId);
 	
 };

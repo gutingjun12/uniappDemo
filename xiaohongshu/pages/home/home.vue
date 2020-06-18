@@ -22,112 +22,22 @@
 			</view>
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item" @click="goToDetail">
+				<view class="item" v-for="(item,index) in articleArr" :key="index" @click="goToDetail(item._id)">
 					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
+					<view class="img-box" v-if="item.imgArr.length>0">
+						<img :src="item.imgArr[0]" alt="">
 					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
+					<!-- 内容标题 -->
+					<view class="title">{{item.title}}</view>
 					<!-- 用户信息 -->
 					<view class="user-info">
 						<view class="l">
 							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
+								<img :src="item.userAvatar" alt="" />
 							</view>
-							<view class="user-name">用户哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
+							<view class="user-name">{{item.userName}}</view>
 						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
-					</view>
-				</view>
-				<view class="item">
-					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
-					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈</view>
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="l">
-							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
-							</view>
-							<view class="user-name">用户哈哈哈</view>
-						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
-					</view>
-				</view>
-				<view class="item">
-					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
-					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈哈哈哈哈或哈哈哈哈哈</view>
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="l">
-							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
-							</view>
-							<view class="user-name">用户哈哈哈</view>
-						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
-					</view>
-				</view>
-				<view class="item">
-					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
-					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈</view>
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="l">
-							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
-							</view>
-							<view class="user-name">用户哈哈哈</view>
-						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
-					</view>
-				</view>
-				<view class="item">
-					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
-					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈</view>
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="l">
-							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
-							</view>
-							<view class="user-name">用户哈哈哈</view>
-						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
-					</view>
-				</view>
-				<view class="item">
-					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
-					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈</view>
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="l">
-							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
-							</view>
-							<view class="user-name">用户哈哈哈</view>
-						</view>
-						<view class="r"><i class="iconfont iconheart"></i>400</view>
+						<view class="r"><i class="iconfont iconheart"></i>{{item.liked}}</view>
 					</view>
 				</view>
 			</view>
@@ -150,11 +60,15 @@
 			return {
 				tabActive: 1, //0--关注  1--发现
 				categoryArr: [], //分类
+				articleArr: [], //所有文章
 			}
 		},
 		onLoad() {
 			const that = this
+			//分类
 			that.getClass()
+			//文章
+			that.getArticles()
 		},
 		methods: {
 			//切换tab
@@ -177,6 +91,24 @@
 					}
 				});
 			},
+
+			//获取所有文章
+			getArticles() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: 'http://192.168.3.45:7001/findAllArticles',
+					data: {},
+					success: (res) => {
+						that.articleArr = res.data.data
+					},
+					fail: (res) => {
+						console.log('服务异常，请稍后重试')
+					}
+				});
+
+			},
+
 			// 跳转到搜索页
 			goToSearch() {
 				uni.navigateTo({
@@ -184,9 +116,9 @@
 				})
 			},
 			// 跳转到详情页
-			goToDetail() {
+			goToDetail(articleId) {
 				uni.navigateTo({
-					url: '../detail/detail'
+					url: '../detail/detail?articleId=' + articleId
 				})
 			}
 		}
@@ -300,14 +232,18 @@
 					margin-bottom: 16rpx;
 
 					.img-box {
+						display: inline-flex;
+						justify-content: center;
+						align-items: center;
 						width: 100%;
+						border: 2rpx solid $uni-border-color;
 
 						img {
-							width: 100%;
+							max-width: 100%;
 						}
 					}
 
-					.content {
+					.title {
 						font-size: $uni-font-size-lg;
 						font-weight: 700;
 						margin: 12rpx;

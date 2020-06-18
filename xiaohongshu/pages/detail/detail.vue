@@ -8,10 +8,10 @@
 				<view class="back-btn" @click="back"><i class="iconfont iconleft"></i></view>
 				<!-- 头像 -->
 				<view class="avatar">
-					<img src="/static/logo.png" alt="">
+					<img :src="detail.userAvatar" alt="">
 				</view>
 				<!-- 用户名 -->
-				<view class="user-name">哈哈</view>
+				<view class="user-name">{{detail.userName}}</view>
 			</view>
 			<!-- 顶部右边 -->
 			<view class="r">
@@ -22,27 +22,24 @@
 		<!-- 主体内容 -->
 		<view class="main">
 			<!-- 轮播图 -->
-			<view class="img-box">
+			<view class="img-box" v-if="imgArr.length>0">
 				<swiper class="swiper" indicator-dots indicator-active-color="#666">
-					<swiper-item class="swiper-item">
-						<img src="/static/logo.png" alt="">
-					</swiper-item>
-					<swiper-item class="swiper-item">
-						<img src="/static/logo.png" alt="">
+					<swiper-item class="swiper-item" v-for="(item,index) in imgArr" :key="index">
+						<img :src="item" alt="">
 					</swiper-item>
 				</swiper>
 			</view>
 			<!-- 文字内容 -->
 			<view class="text-box">
-				<view class="title">标题</view>
-				<view class="content">哈哈哈哈哈哈哈哈哈哈或,dddddddddddd,.。哈哈哈哈哈哈，哈哈哈哈哈。</view>
-				<view class="time">昨天 23:00</view>
+				<view class="title">{{detail.title}}</view>
+				<view class="content">{{detail.content}}</view>
+				<view class="time">{{detail.createDate}}</view>
 			</view>
 		</view>
 		<!-- 评论区 -->
 		<view class="comment">
 			<!-- 评论总数 -->
-			<view class="total">共300条评论</view>
+			<view class="total">共{{detail.commentNum}}条评论</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
 				<view class="item">
@@ -52,7 +49,7 @@
 							<img src="/static/logo.png" alt="">
 						</view>
 						<view class="user-name">别人哈哈哈</view>
-						<view class="like">❤20</view>
+						<view class="like"><i class="iconfont iconheart"></i>20</view>
 					</view>
 					<!-- 内容 -->
 					<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
@@ -64,7 +61,7 @@
 								<img src="/static/logo.png" alt="">
 							</view>
 							<view class="user-name">别人哈哈哈</view>
-							<view class="like">❤20</view>
+							<view class="like"><i class="iconfont iconheart"></i>20</view>
 						</view>
 						<!-- 内容 -->
 						<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
@@ -77,7 +74,7 @@
 							<img src="/static/logo.png" alt="">
 						</view>
 						<view class="user-name">别人哈哈哈</view>
-						<view class="like">❤20</view>
+						<view class="like"><i class="iconfont iconheart"></i>20</view>
 					</view>
 					<!-- 内容 -->
 					<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
@@ -90,11 +87,11 @@
 			<!-- 输入框 -->
 			<textarea type="text" placeholder="说点什么。。。" />
 			<!-- 点赞 -->
-			<view class="item">♥100</view>
+			<view class="item"><i class="iconfont iconheart"></i>{{detail.liked}}</view>
 			<!-- 收藏 -->
-			<view class="item">★23</view>
+			<view class="item"><i class="iconfont iconstar"></i>{{detail.collected}}</view>
 			<!-- 评论 -->
-			<view class="item">◆666</view>
+			<view class="item"><i class="iconfont iconmessage"></i>{{detail.commentNum}}</view>
 		</view>
 		
 		
@@ -105,13 +102,44 @@
 	export default {
 		data() {
 			return {
-
+				articleId: '', //文章id
+				detail: {}, //文章详情
+				imgArr: [],//轮播图
 			}
+		},
+		onLoad(option) {
+			const that = this
+			that.articleId = option.articleId
+			console.log(option)
+			that.getDetail()
 		},
 		methods: {
 			back() {
 				uni.navigateBack()
+			},
+			
+			//获取笔记详情
+			getDetail() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: 'http://192.168.3.45:7001/findByArticleId',
+					data: {
+						articleId: that.articleId
+					},
+					success: (res) => {
+						console.log(res)
+						that.detail = res.data.data
+						that.imgArr = that.detail.imgArr
+						
+					},
+					fail: (res) => {
+						console.log('服务异常，请稍后重试')
+					}
+				});
+				
 			}
+			
 		}
 	}
 </script>

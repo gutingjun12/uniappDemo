@@ -43,6 +43,8 @@
 		data() {
 			return {
 				userId: '', //用户id
+				userName: '',//用户名称
+				userAvatar: '',//用户头像
 				imgArr: [],//图片
 				title: '',//文章标题
 				content: '',//文章内容
@@ -54,6 +56,8 @@
 				key: 'userInfo',
 				success: function (res) {
 					that.userId = JSON.parse(res.data)._id
+					that.userName = JSON.parse(res.data).name
+					that.userAvatar = JSON.parse(res.data).avatar
 				}
 			});
 			
@@ -95,6 +99,8 @@
 					url: 'http://192.168.3.45:7001/addArticle',
 					data: {
 						userId: that.userId,
+						userName: that.userName,
+						userAvatar: that.userAvatar,
 						title: that.title,
 						content: that.content,
 						imgArr: that.imgArr

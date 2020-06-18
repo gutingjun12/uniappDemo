@@ -4,6 +4,8 @@ module.exports = app => {
 	
   const ArticleSchema = new Schema({
 		userId: { type: String },
+		userName: { type: String },
+		userAvatar: { type: String },
     title: { type: String },
     imgArr: { type: Array },
 		content: { type: String },

@@ -9,13 +9,26 @@ class UserController extends Controller {
 		const {
 			ctx
 		} = this;
-		
+
 		// 用户登录手机号
 		let phone = ctx.request.body.phone;
 		let res = await ctx.service.user.findByPhone(phone);
-		ctx.body = {
-			'data': res
-		};
+		if (!res) {
+			let phone = ctx.request.body.phone;
+			let newUser = {
+				name: '小红薯' + phone,
+				phone: phone
+			}
+			let result = await ctx.service.user.addUser(newUser);
+			ctx.body = {
+				'data': result
+			};
+
+		} else {
+			ctx.body = {
+				'data': res
+			};
+		}
 
 	}
 

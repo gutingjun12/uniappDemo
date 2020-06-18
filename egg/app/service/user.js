@@ -6,14 +6,14 @@ class UserService extends Service {
 	// 通过手机号查找用户
 	async findByPhone(phone) {
 		const { ctx } = this;
-		return await ctx.model.User.find({'phone': phone});
+		return await ctx.model.User.findOne({'phone': phone});
 	}
 
 	//添加用户
 	async addUser(obj) {
 		const { ctx } = this;
-		var data = new ctx.model.User(obj);
-		data.save();
+		let data = new ctx.model.User(obj);
+		return await data.save();
 	}
 
 	// async removeUser(obj) {

@@ -54,26 +54,28 @@
 		<view class="main">
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item">
+				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goDetail(item._id)">
 					<!-- 图片或视频 -->
-					<view class="img-box">
-						<img src="../../static/logo.png" alt="">
+					<view class="img-box" v-if="item.imgArr.length>0">
+						<img :src="item.imgArr" alt="">
 					</view>
-					<!-- 内容 -->
-					<view class="content">哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
+					<!-- 内容标题 -->
+					<view class="title">{{item.title}}</view>
 					<!-- 用户信息 -->
 					<view class="user-info">
 						<view class="l">
 							<view class="avatar">
-								<img src="../../static/logo.png" alt="" />
+								<img :src="item.userAvatar" alt="" />
 							</view>
-							<view class="user-name">用户哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
+							<view class="user-name">{{item.userName}}</view>
 						</view>
-						<view class="r">❤400</view>
+						<view class="r"><i class="iconfont iconheart"></i>{{item.liked}}</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		
+		
 
 		<!-- 底部导航 -->
 		<tabBar :active="4"></tabBar>
@@ -89,17 +91,50 @@
 		},
 		data() {
 			return {
-				userInfo: {} //用户信息
+				userInfo: {} ,//用户信息
+				articleArr: [], //我的笔记
 			}
 		},
 		onLoad() {
 			const that = this
-			let userInfo = uni.getStorageSync('userInfo')
-			that.userInfo = JSON.parse(userInfo)
+			uni.getStorage({
+				key: 'userInfo',
+				success: function(res) {
+					that.userInfo = JSON.parse(res.data)
+				}
+			});
+			
+			that.getMyArticles()
 
 		},
 		methods: {
-
+			//获取个人笔记
+			getMyArticles() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: 'http://192.168.3.45:7001/findArticlesByUserId',
+					data: {
+						userId: that.userInfo._id
+					},
+					success: (res) => {
+						console.log(res)
+						that.articleArr = res.data.data
+					},
+					fail: (res) => {
+						console.log('服务异常，请稍后重试')
+					}
+				});
+				
+			},
+			
+			//跳转到笔记详情
+			goDetail(articleId) {
+				uni.navigateTo({
+					url: '../detail/detail?articleId=' + articleId
+				})
+			}
+			
 		}
 	}
 </script>
@@ -187,11 +222,11 @@
 
 			.item {
 				margin-right: 20rpx;
-				
+
 				&.male {
 					color: #1e90ff;
 				}
-				
+
 				&.female {
 					color: #ff69b4;
 				}
@@ -245,7 +280,7 @@
 						}
 					}
 
-					.content {
+					.title {
 						font-size: $uni-font-size-lg;
 						font-weight: 700;
 						margin: 12rpx;

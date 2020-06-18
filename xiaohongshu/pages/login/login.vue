@@ -93,19 +93,19 @@
 						code: that.code
 					},
 					success: (res) => {
-						
-						if(res.data.data.length==0){
-							that.addNewUser()
-							
-						}else {
-							let userInfo = JSON.stringify((res.data.data)[0])
-							console.log('登录成功')
-							uni.setStorageSync('userInfo', userInfo)
-							uni.reLaunch({
-							    url: '/pages/home/home'
-							});
-						}
-						
+						console.log(res.data.data)
+						let userInfo = JSON.stringify(res.data.data)
+						console.log('登录成功')
+						uni.setStorage({
+							key: 'userInfo',
+							data: userInfo,
+							success: function() {
+								uni.reLaunch({
+									url: '/pages/home/home'
+								});
+							}
+						});
+
 					},
 					fail: (res) => {
 						console.log('服务异常，请稍后重试')
@@ -113,26 +113,26 @@
 				});
 
 			},
-			
+
 			//新增用户
-			addNewUser() {
-				const that = this
-				uni.request({
-					method: 'POST',
-					url: 'http://192.168.3.45:7001/addUser',
-					data: {
-						phone: that.phone
-					},
-					success: (res) => {
-						console.log('新增用户成功')
-						that.login()
-					},
-					fail: (res) => {
-						console.log('服务异常，请稍后重试')
-					}
-				});
-				
-			}
+			// addNewUser() {
+			// 	const that = this
+			// 	uni.request({
+			// 		method: 'POST',
+			// 		url: 'http://192.168.3.45:7001/addUser',
+			// 		data: {
+			// 			phone: that.phone
+			// 		},
+			// 		success: (res) => {
+			// 			console.log('新增用户成功')
+			// 			that.login()
+			// 		},
+			// 		fail: (res) => {
+			// 			console.log('服务异常，请稍后重试')
+			// 		}
+			// 	});
+
+			// }
 
 		}
 	}
