@@ -19,7 +19,7 @@
 		<!-- 内容区 -->
 		<view class="content-area">
 			<!-- 标题 -->
-			<input class="uni-input" placeholder="填写标题会获得更多赞哦~(20字符以内)" placeholder-style="font-weight:400;color:#999" maxlength="20"
+			<input class="uni-input" placeholder="填写标题会获得更多赞哦~(20字符以内)" placeholder-style="color:#999" maxlength="20"
 			 v-model="title" />
 			<!-- 正文 -->
 			<textarea class="text" placeholder="添加正文" placeholder-style="color: #999;" maxlength="-1" v-model="content" />
@@ -143,7 +143,7 @@
 				align-items: center;
 				width: 160rpx;
 				height: 160rpx;
-				border: 2rpx dashed $uni-border-color;
+				border: 2rpx dashed #ddd;
 				margin-right: 20rpx;
 				
 				&:last-of-type {
