@@ -107,7 +107,7 @@
 					},
 					success: (res) => {
 						console.log(res.data.data._id)
-						uni.redirectTo({
+						uni.navigateTo({
 							url: '../detail/detail?articleId=' + res.data.data._id
 						})
 						
