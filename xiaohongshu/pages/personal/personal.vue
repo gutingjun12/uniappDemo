@@ -33,7 +33,7 @@
 					</view>
 				</view>
 				<!-- 编辑 -->
-				<button class="r-edit">编辑资料</button>
+				<button class="r-edit" @click="showEdit=true">编辑资料</button>
 			</view>
 		</view>
 
@@ -57,7 +57,7 @@
 				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goDetail(item._id)">
 					<!-- 图片或视频 -->
 					<view class="img-box" v-if="item.imgArr.length>0">
-						<img :src="item.imgArr" alt="">
+						<img :src="item.imgArr[0]" alt="">
 					</view>
 					<!-- 内容标题 -->
 					<view class="title">{{item.title}}</view>
@@ -74,8 +74,42 @@
 				</view>
 			</view>
 		</view>
-		
-		
+
+		<!-- 遮罩层 -->
+		<view class="mask" v-if="showEdit" @click="showEdit=false"></view>
+
+		<!-- 编辑资料 -->
+		<view class="edit-info-area" v-if="showEdit">
+			<view class="form-item">
+				<view class="avatar" @click="chooseImg">
+					<img :src="userAvatar" alt="">
+				</view>
+			</view>
+			<view class="form-item">
+				<view class="form-title">用户名：</view>
+				<input class="uni-input" type="text" placeholder="用户名" v-model="userName" />
+			</view>
+			<view class="form-item">
+				<view class="form-title">性别：</view>
+				<radio-group @change="sexChange">
+					<label>
+						<radio value="0" :checked="userSex==0" />男
+					</label>
+					<label>
+						<radio value="1" :checked="userSex==1" />女
+					</label>
+				</radio-group>
+			</view>
+			<view class="form-item">
+				<view class="form-title">地区：</view>
+				<input class="uni-input" type="text" placeholder="所在地(如: 广东广州)" v-model="userArea">
+			</view>
+			<view class="form-item">
+				<button @click="submit">提交</button>
+			</view>
+
+		</view>
+
 
 		<!-- 底部导航 -->
 		<tabBar :active="4"></tabBar>
@@ -91,8 +125,13 @@
 		},
 		data() {
 			return {
-				userInfo: {} ,//用户信息
+				userInfo: {}, //用户信息
 				articleArr: [], //我的笔记
+				userAvatar: '', //编辑中的头像
+				userName: '', //编辑中用户名
+				userSex: 0, //编辑中的性别
+				userArea: '', //编辑中的地区
+				showEdit: false, //编辑资料弹框
 			}
 		},
 		onLoad() {
@@ -101,9 +140,13 @@
 				key: 'userInfo',
 				success: function(res) {
 					that.userInfo = JSON.parse(res.data)
+					that.userAvatar = that.userInfo.avatar
+					that.userName = that.userInfo.name
+					that.userSex = that.userInfo.sex
+					that.userArea = that.userInfo.area
 				}
 			});
-			
+
 			that.getMyArticles()
 
 		},
@@ -122,19 +165,100 @@
 						that.articleArr = res.data.data
 					},
 					fail: (res) => {
-						console.log('服务异常，请稍后重试')
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
 					}
 				});
-				
+
 			},
-			
+
+			// 选择照片
+			chooseImg() {
+				const that = this
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function(res) {
+						uni.uploadFile({
+							url: 'http://127.0.0.1:7001/uploadFile',
+							filePath: res.tempFiles[0].path,
+							name: 'file',
+							success: function(uploadFileRes) {
+								that.userAvatar = JSON.parse(uploadFileRes.data).data
+							},
+							fail: function() {
+								uni.showToast({
+									title: '上传文件失败，请稍后重试',
+									icon: 'none'
+								})
+							}
+						});
+
+					},
+					fail: function(res) {
+						uni.showToast({
+							title: '选择图片失败，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+			},
+
+			//选择性别
+			sexChange(e) {
+				const that = this
+				that.userSex = e.detail.value
+			},
+
+			//提交用户信息编辑
+			submit() {
+				const that = this
+				uni.request({
+					method: 'POST',
+					url: 'http://192.168.3.45:7001/updateUser',
+					data: {
+						userId: that.userInfo._id,
+						userName: that.userName,
+						avatar: that.userAvatar,
+						sex: that.userSex,
+						area: that.userArea
+					},
+					success: (res) => {
+						console.log('修改成功')
+						console.log(res.data.data)
+						uni.setStorage({
+							key: 'userInfo',
+							data: JSON.stringify(res.data.data),
+							success: function() {
+								that.showEdit = false
+								that.userInfo = res.data.data
+								that.getMyArticles()
+							}
+						});
+
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+
+
+			},
+
+
 			//跳转到笔记详情
 			goDetail(articleId) {
 				uni.navigateTo({
 					url: '../detail/detail?articleId=' + articleId
 				})
 			}
-			
+
 		}
 	}
 </script>
@@ -326,6 +450,75 @@
 					}
 				}
 			}
+		}
+
+		.mask {
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 999;
+			width: 100%;
+			min-height: 100vh;
+			background: $uni-bg-color-mask;
+		}
+
+		.edit-info-area {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			width: 100%;
+			height: 70vh;
+			background: #fff;
+
+
+
+			.form-item {
+				display: flex;
+				align-items: center;
+				margin: 50rpx 30rpx;
+
+				&:first-of-type {
+					justify-content: center;
+					padding: 30rpx 0;
+
+					.avatar {
+						width: 160rpx;
+						height: 160rpx;
+						border-radius: $uni-border-radius-circle;
+						border: 1rpx solid $uni-border-color;
+						overflow: hidden;
+
+						img {
+							max-width: 100%;
+						}
+					}
+				}
+
+				.form-title {
+					font-size: $uni-font-size-lg;
+					width: 20%;
+				}
+
+				.uni-input {
+					flex: 1;
+					height: 80rpx;
+					border: 2rpx solid $uni-border-color;
+					padding: 0 20rpx;
+				}
+
+				label {
+					margin-right: 30rpx;
+				}
+
+				button {
+					width: 100%;
+					color: #fff;
+					background: $uni-color-theme;
+				}
+
+			}
+
 		}
 
 	}

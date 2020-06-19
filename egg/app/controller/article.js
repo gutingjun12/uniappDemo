@@ -30,35 +30,35 @@ class ArticleController extends Controller {
 			ctx
 		} = this;
 
-		let res = await ctx.service.article.findAllArticles();
+		let res = await ctx.service.article.findArticle({});
 		ctx.body = {'data': res};
 
 	}
 	
-	//通过用户id查找文章
+	//通过用户id查找文章列表
 	async findByUserId() {
 		const {
 			ctx
 		} = this;
 		
 		let userId = ctx.query.userId;
-		let res = await ctx.service.article.findByUserId(userId);
+		let res = await ctx.service.article.findArticle({'userId': userId});
 		ctx.body = {'data': res};
 	
 	}
 	
-	//通过文章id查找文章
+	//通过文章id查找文章详情
 	async findByArticleId() {
 		const {
 			ctx
 		} = this;
 		
-		let articleId = ctx.app.mongoose.Types.ObjectId(ctx.query.articleId);
-		let res = await ctx.service.article.findByArticleId(articleId);
-		res.createDate = await ctx.helper.formatTime(res.createDate);
+		let articleId = ctx.query.articleId;
+		let res = await ctx.service.article.findArticle({'_id': articleId});
 		ctx.body = {'data': res};
 	
 	}
+	
 	
 
 }

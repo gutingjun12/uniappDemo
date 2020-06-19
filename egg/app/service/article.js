@@ -15,32 +15,40 @@ class ArticleService extends Service {
 	}
 
 	//查询所有文章
-	async findAllArticles() {
+	async findArticle(obj) {
 		const {
 			ctx
 		} = this;
-		return await ctx.model.Article.find({});
+		let res = await ctx.model.Article.find(obj);
+		let res1 = res.map(item => {
+			return {
+				'imgArr': item.imgArr,
+				'liked': item.liked,
+				'collected': item.collected,
+				'commentNum': item.commentNum,
+				'_id': item._id,
+				'userId': item.userId,
+				'userName': item.userName,
+				'userAvatar': item.userAvatar,
+				'title': item.title,
+				'content': item.content,
+				'createDate': ctx.helper.formatTime(item.createDate)
+			}
+		});
+		console.log(res1)
+		return res1;
 
 	}
 	
-	//通过用户id查询文章
-	async findByUserId(userId) {
+	//更改用户信息后更新文章里的用户信息
+	async updateArticles(userId, obj) {
 		const {
 			ctx
 		} = this;
-		return await ctx.model.Article.find({'userId': userId});
+		return await ctx.model.Article.updateMany({'userId': userId}, obj);
 	
 	}
 	
-	//通过笔记id查询
-	async findByArticleId(articleId) {
-		const {
-			ctx
-		} = this;
-		return await ctx.model.Article.findById(articleId);
-	
-	}
-
 
 }
 

@@ -129,16 +129,17 @@
 					},
 					success: (res) => {
 						console.log(res)
-						that.detail = res.data.data
+						that.detail = res.data.data[0]
 						that.imgArr = that.detail.imgArr
-						
+
 					},
 					fail: (res) => {
 						console.log('服务异常，请稍后重试')
 					}
 				});
 				
-			}
+			},
+			
 			
 		}
 	}
