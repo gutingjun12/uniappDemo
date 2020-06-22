@@ -96,7 +96,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://192.168.3.45:7001/addArticle',
+					url: 'http://127.0.0.1:7001/addArticle',
 					data: {
 						userId: that.userId,
 						userName: that.userName,
@@ -113,7 +113,10 @@
 						
 					},
 					fail: (res) => {
-						console.log('服务异常，请稍后重试')
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
 					}
 				});
 				

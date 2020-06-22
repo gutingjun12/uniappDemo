@@ -50,7 +50,8 @@ module.exports = appInfo => {
 		client: {
 			url: 'mongodb://127.0.0.1/xiaohongshu',
 			options: {
-
+				useNewUrlParser: true,
+				useUnifiedTopology: true 
 			},
 		},
 	};

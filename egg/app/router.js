@@ -29,4 +29,9 @@ module.exports = app => {
 	//通过文章id查找文章
 	router.get('/findByArticleId', controller.article.findByArticleId);
 	
+	//关注
+	router.post('/follow', controller.follow.follow);
+	//是否已关注该用户
+	router.post('/isFollow', controller.follow.isFollow);
+	
 };

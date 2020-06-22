@@ -156,12 +156,11 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.3.45:7001/findArticlesByUserId',
+					url: 'http://127.0.0.1:7001/findArticlesByUserId',
 					data: {
 						userId: that.userInfo._id
 					},
 					success: (res) => {
-						console.log(res)
 						that.articleArr = res.data.data
 					},
 					fail: (res) => {
@@ -218,7 +217,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://192.168.3.45:7001/updateUser',
+					url: 'http://127.0.0.1:7001/updateUser',
 					data: {
 						userId: that.userInfo._id,
 						userName: that.userName,
@@ -227,8 +226,10 @@
 						area: that.userArea
 					},
 					success: (res) => {
-						console.log('修改成功')
-						console.log(res.data.data)
+						uni.showToast({
+							title: '修改成功',
+							icon: 'success'
+						})
 						uni.setStorage({
 							key: 'userInfo',
 							data: JSON.stringify(res.data.data),

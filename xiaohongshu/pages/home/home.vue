@@ -22,13 +22,13 @@
 			</view>
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item" v-for="(item,index) in articleArr" :key="index" @click="goToDetail(item._id)">
+				<view class="item" v-for="(item,index) in articleArr" :key="index">
 					<!-- 图片或视频 -->
-					<view class="img-box" v-if="item.imgArr.length>0">
+					<view class="img-box" v-if="item.imgArr.length>0" @click="goToDetail(item._id)">
 						<img :src="item.imgArr[0]" alt="">
 					</view>
 					<!-- 内容标题 -->
-					<view class="title">{{item.title}}</view>
+					<view class="title" @click="goToDetail(item._id)">{{item.title}}</view>
 					<!-- 用户信息 -->
 					<view class="user-info">
 						<view class="l">
@@ -81,7 +81,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.3.45:7001/getCategory',
+					url: 'http://127.0.0.1:7001/getCategory',
 					data: {},
 					success: (res) => {
 						that.categoryArr = res.data.data
@@ -97,7 +97,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.3.45:7001/findAllArticles',
+					url: 'http://127.0.0.1:7001/findAllArticles',
 					data: {},
 					success: (res) => {
 						that.articleArr = res.data.data

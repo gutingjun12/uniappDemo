@@ -16,7 +16,8 @@
 			<!-- 顶部右边 -->
 			<view class="r">
 				<!-- 关注按钮 -->
-				<button type="warn" size="mini" plain="true" class="follow">关注</button>
+				<button type="warn" :disabled="followBtn=='关注'?false:true" size="mini" plain="true"
+				 class="follow" v-if="userId!=detail.userId" @click="follow">{{followBtn}}</button>
 			</view>
 		</view>
 		<!-- 主体内容 -->
@@ -102,16 +103,28 @@
 	export default {
 		data() {
 			return {
+				userId: '', // 自己的用户id
 				articleId: '', //文章id
 				detail: {}, //文章详情
 				imgArr: [],//轮播图
+				followBtn: '关注',
 			}
 		},
 		onLoad(option) {
 			const that = this
+			// 文章id
 			that.articleId = option.articleId
-			console.log(option)
+			//自己的userid
+			uni.getStorage({
+				key: 'userInfo',
+				success(data) {
+					that.userId = JSON.parse(data.data)._id
+				}
+			})
+			// 笔记详情
 			that.getDetail()
+			
+			
 		},
 		methods: {
 			back() {
@@ -123,22 +136,84 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.3.45:7001/findByArticleId',
+					url: 'http://127.0.0.1:7001/findByArticleId',
 					data: {
 						articleId: that.articleId
 					},
 					success: (res) => {
-						console.log(res)
 						that.detail = res.data.data[0]
 						that.imgArr = that.detail.imgArr
+						
+						// 是否已关注该作者
+						that.isFollow()
 
 					},
 					fail: (res) => {
-						console.log('服务异常，请稍后重试')
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
 					}
 				});
 				
 			},
+			
+			//关注
+			follow() {
+				const that = this
+				uni.request({
+					method: 'POST',
+					url: 'http://127.0.0.1:7001/follow',
+					data: {
+						userId: that.userId,
+						followedUserId: that.detail.userId
+					},
+					success: (res) => {
+						uni.showToast({
+							title: '关注成功',
+							icon: 'success'
+						})
+						
+						that.isFollow()
+				
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			},
+			
+			//是否已关注对方
+			isFollow() {
+				const that = this
+				uni.request({
+					method: 'POST',
+					url: 'http://127.0.0.1:7001/isFollow',
+					data: {
+						userId: that.userId,
+						followedUserId: that.detail.userId
+					},
+					success: (res) => {
+						if(res.data.data){
+							that.followBtn = '已关注'
+						}else{
+							that.followBtn = '关注'
+						}
+				
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			}
 			
 			
 		}

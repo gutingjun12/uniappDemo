@@ -87,7 +87,7 @@
 
 				uni.request({
 					method: 'POST',
-					url: 'http://192.168.3.45:7001/login',
+					url: 'http://127.0.0.1:7001/login',
 					data: {
 						phone: that.phone,
 						code: that.code
@@ -119,7 +119,7 @@
 			// 	const that = this
 			// 	uni.request({
 			// 		method: 'POST',
-			// 		url: 'http://192.168.3.45:7001/addUser',
+			// 		url: 'http://127.0.0.1:7001/addUser',
 			// 		data: {
 			// 			phone: that.phone
 			// 		},

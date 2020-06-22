@@ -35,7 +35,6 @@ class ArticleService extends Service {
 				'createDate': ctx.helper.formatTime(item.createDate)
 			}
 		});
-		console.log(res1)
 		return res1;
 
 	}
