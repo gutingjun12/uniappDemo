@@ -81,7 +81,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://localhost:7001/getCategory',
+					url: '/api/getCategory',
 					data: {},
 					success: (res) => {
 						that.categoryArr = res.data.data
@@ -100,7 +100,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://localhost:7001/findAllArticles',
+					url: '/api/findAllArticles',
 					data: {},
 					success: (res) => {
 						that.articleArr = res.data.data
@@ -282,7 +282,7 @@
 								img {
 									width: 100%;
 									height: 100%;
-									object-fit:cover;
+									object-fit: cover;
 								}
 							}
 

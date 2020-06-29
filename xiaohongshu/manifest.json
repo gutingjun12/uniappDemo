@@ -78,6 +78,21 @@
 	"h5": {
 		"router": {
 			"mode": "history"
+		},
+		"devServer": {
+			"https": false,
+			"port": 8080,
+			"proxy": {
+				"/api": {
+					"target": "http://192.168.5.104:7001",
+					"changeOrigin": true,
+					"secure": false,
+					"pathRewrite": {
+						"^/api": ""
+					}
+				}
+			}
 		}
+
 	}
 }
