@@ -81,7 +81,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.5.104:7001/getCategory',
+					url: 'http://localhost:7001/getCategory',
 					data: {},
 					success: (res) => {
 						that.categoryArr = res.data.data
@@ -100,7 +100,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://192.168.5.104:7001/findAllArticles',
+					url: 'http://localhost:7001/findAllArticles',
 					data: {},
 					success: (res) => {
 						that.articleArr = res.data.data
