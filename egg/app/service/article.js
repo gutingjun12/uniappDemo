@@ -40,11 +40,21 @@ class ArticleService extends Service {
 	}
 	
 	//更改用户信息后更新文章里的用户信息
-	async updateArticles(userId, obj) {
+	async updateByUserInfo(userId, obj) {
 		const {
 			ctx
 		} = this;
 		return await ctx.model.Article.updateMany({'userId': userId}, obj);
+	
+	}
+	
+	
+	//修改文章
+	async update(articleId, obj) {
+		const {
+			ctx
+		} = this;
+		return await ctx.model.Article.updateOne({'_id': articleId}, obj);
 	
 	}
 	

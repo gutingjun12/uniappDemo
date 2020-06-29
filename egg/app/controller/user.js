@@ -52,7 +52,7 @@ class UserController extends Controller {
 		}
 		
 		//更改文章里的用户信息
-		await ctx.service.article.updateArticles(id, newArticle);
+		await ctx.service.article.updateByUserInfo(id, newArticle);
 		
 		let res = await ctx.service.user.updateUser(id, newObj);
 		

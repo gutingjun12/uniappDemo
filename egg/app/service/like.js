@@ -2,19 +2,19 @@
 
 const Service = require('egg').Service;
 
-class FollowService extends Service {
+class LikeService extends Service {
 
-	//关注用户
-	async follow(obj) {
+	//点赞
+	async like(obj) {
 		const {
 			ctx
 		} = this;
-		let data = new ctx.model.Follow(obj);
+		let data = new ctx.model.Like(obj);
 		return await data.save();
 
 	}
 	
-	//查找是否已经关注
+/* 	//查找是否已经关注
 	async findFollow(obj) {
 		const {
 			ctx
@@ -30,10 +30,10 @@ class FollowService extends Service {
 		} = this;
 		return await ctx.model.Follow.remove(obj);
 	
-	}
+	} */
 
 	
 
 }
 
-module.exports = FollowService;
+module.exports = LikeService;

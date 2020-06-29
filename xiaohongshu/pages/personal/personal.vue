@@ -300,12 +300,15 @@
 			.avatar {
 				width: 140rpx;
 				height: 140rpx;
+				border: 2rpx solid $uni-border-color;
 				border-radius: $uni-border-radius-circle;
 				overflow: hidden;
 				margin-right: 20rpx;
 
 				img {
-					max-width: 100%;
+					width: 100%;
+					height: 100%;
+					object-fit:cover;
 				}
 			}
 
@@ -418,22 +421,27 @@
 					.user-info {
 						display: flex;
 						justify-content: space-between;
+						align-items: center;
 						padding: 12rpx;
 						font-size: $uni-font-size-sm;
 						color: $uni-text-color-second;
 
 						.l {
 							display: inline-flex;
+							align-items: center;
 
 							.avatar {
-								width: 38rpx;
-								height: 38rpx;
+								width: 50rpx;
+								height: 50rpx;
+								border: 2rpx solid $uni-border-color;
 								border-radius: $uni-border-radius-circle;
 								overflow: hidden;
 								margin-right: 6rpx;
 
 								img {
 									width: 100%;
+									height: 100%;
+									object-fit:cover;
 								}
 							}
 
@@ -491,7 +499,9 @@
 						overflow: hidden;
 
 						img {
-							max-width: 100%;
+							width: 100%;
+							height: 100%;
+							object-fit:cover;
 						}
 					}
 				}

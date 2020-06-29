@@ -16,8 +16,8 @@
 			<!-- 顶部右边 -->
 			<view class="r">
 				<!-- 关注按钮 -->
-				<button type="warn" :disabled="followBtn=='关注'?false:true" size="mini" plain="true"
-				 class="follow" v-if="userId!=detail.userId" @click="follow">{{followBtn}}</button>
+				<button :type="followBtn=='关注'?'warn':'default'" size="mini" plain="true" class="follow" v-if="userId!=detail.userId"
+				 @click="clickFollowBtn">{{followBtn}}</button>
 			</view>
 		</view>
 		<!-- 主体内容 -->
@@ -86,13 +86,18 @@
 		<!-- 底部固定 -->
 		<view class="fixed-part">
 			<!-- 输入框 -->
-			<textarea type="text" placeholder="说点什么。。。" />
+			<textarea placeholder="说点什么。。。" />
 			<!-- 点赞 -->
 			<view class="item"><i class="iconfont iconheart"></i>{{detail.liked}}</view>
 			<!-- 收藏 -->
 			<view class="item"><i class="iconfont iconstar"></i>{{detail.collected}}</view>
 			<!-- 评论 -->
 			<view class="item"><i class="iconfont iconmessage"></i>{{detail.commentNum}}</view>
+		</view>
+		
+		<!-- 弹出的输入框 -->
+		<view class="eject-textarea">
+			<textarea placeholder="@某人" fixed="true" adjust-position="false" auto-height="true" />
 		</view>
 		
 		
@@ -158,6 +163,19 @@
 				
 			},
 			
+			//点击关注按钮
+			clickFollowBtn() {
+				const that = this
+				if(that.followBtn == '关注'){
+					that.follow()
+					
+				}else if(that.followBtn == '已关注') {
+					that.cancelFollow()
+					
+				}
+				
+			},
+			
 			//关注
 			follow() {
 				const that = this
@@ -174,7 +192,36 @@
 							icon: 'success'
 						})
 						
-						that.isFollow()
+						that.followBtn = '已关注'
+				
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			},
+			
+			//取消关注
+			cancelFollow() {
+				const that = this
+				uni.request({
+					method: 'POST',
+					url: 'http://127.0.0.1:7001/cancelFollow',
+					data: {
+						userId: that.userId,
+						followedUserId: that.detail.userId
+					},
+					success: (res) => {
+						uni.showToast({
+							title: '取消成功',
+							icon: 'success'
+						})
+						
+						that.followBtn = '关注'
 				
 					},
 					fail: (res) => {
@@ -257,6 +304,8 @@
 
 					img {
 						width: 100%;
+						height: 100%;
+						object-fit:cover;
 					}
 				}
 
@@ -407,5 +456,15 @@
 				text-align: center;
 			}
 		}
+		
+		.eject-textarea {
+			border: 1px solid black;
+			
+			textarea {
+				width: 100%;
+				border: 1px solid pink;
+			}
+		}
+		
 	}
 </style>

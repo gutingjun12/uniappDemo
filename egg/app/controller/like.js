@@ -2,24 +2,25 @@
 
 const Controller = require('egg').Controller;
 
-class FollowController extends Controller {
-	//关注
-	async follow() {
+class LikeController extends Controller {
+	//点赞
+	async like() {
 		const {
 			ctx
 		} = this;
 	
-		let newFollow = {
+		let newLike = {
 			userId: ctx.request.body.userId,
-			followedUserId: ctx.request.body.followedUserId
+			articleId: ctx.request.body.articleId
 		}
+					
+		let result = await ctx.service.like.like(newLike);
 		
-		let result = await ctx.service.follow.follow(newFollow);
 		ctx.body = {'data': result};
 		
 	}
 	
-	//是否关注
+/* 	//是否关注
 	async isFollow() {
 		const {
 			ctx
@@ -49,9 +50,9 @@ class FollowController extends Controller {
 		let result = await ctx.service.follow.cancelFollow(newFollow);
 		ctx.body = {'data': result};
 		
-	}
+	} */
 	
 
 }
 
-module.exports = FollowController;
+module.exports = LikeController;

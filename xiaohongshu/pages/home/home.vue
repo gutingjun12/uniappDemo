@@ -81,13 +81,16 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/getCategory',
+					url: 'http://192.168.5.104:7001/getCategory',
 					data: {},
 					success: (res) => {
 						that.categoryArr = res.data.data
 					},
 					fail: (res) => {
-						console.log('服务异常，请稍后重试')
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
 					}
 				});
 			},
@@ -97,13 +100,16 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/findAllArticles',
+					url: 'http://192.168.5.104:7001/findAllArticles',
 					data: {},
 					success: (res) => {
 						that.articleArr = res.data.data
 					},
 					fail: (res) => {
-						console.log('服务异常，请稍后重试')
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
 					}
 				});
 
@@ -263,16 +269,20 @@
 
 						.l {
 							display: inline-flex;
+							align-items: center;
 
 							.avatar {
-								width: 38rpx;
-								height: 38rpx;
+								width: 50rpx;
+								height: 50rpx;
 								border-radius: $uni-border-radius-circle;
+								border: 2rpx solid $uni-border-color;
 								overflow: hidden;
 								margin-right: 6rpx;
 
 								img {
 									width: 100%;
+									height: 100%;
+									object-fit:cover;
 								}
 							}
 
