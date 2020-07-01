@@ -5,7 +5,7 @@ const Service = require('egg').Service;
 class FollowService extends Service {
 
 	//关注用户
-	async follow(obj) {
+	async addFollow(obj) {
 		const {
 			ctx
 		} = this;

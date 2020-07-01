@@ -19,7 +19,7 @@
 			</view>
 			<view class="r">
 				<view class="r-top">
-					<view class="item">
+					<view class="item" @click="goUrl(1)">
 						<view class="num">{{userInfo.follow}}</view>
 						<view class="text">关注</view>
 					</view>
@@ -54,7 +54,7 @@
 		<view class="main">
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goDetail(item._id)">
+				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goUrl(2, item._id)">
 					<!-- 图片或视频 -->
 					<view class="img-box" v-if="item.imgArr.length>0">
 						<img :src="item.imgArr[0]" alt="">
@@ -258,7 +258,26 @@
 				uni.navigateTo({
 					url: '../detail/detail?articleId=' + articleId
 				})
+			},
+			
+			//跳转页面
+			goUrl(num, params) {
+				const that = this
+				let url = ''
+				switch(num) {
+					case 1:
+						url = '../followList/followList?flag=0'
+						break;
+					case 2:
+						url = '../detail/detail?articleId=' + params
+						break;
+				}
+				uni.navigateTo({
+					url: url 
+				})
+				
 			}
+			
 
 		}
 	}

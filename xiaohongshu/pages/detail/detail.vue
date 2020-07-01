@@ -196,7 +196,7 @@
 					url: '/api/follow',
 					data: {
 						userId: that.userId,
-						followedUserId: that.detail.userId
+						followedUserId: that.detail.user._id
 					},
 					success: (res) => {
 						uni.showToast({
@@ -225,7 +225,7 @@
 					url: '/api/cancelFollow',
 					data: {
 						userId: that.userId,
-						followedUserId: that.detail.userId
+						followedUserId: that.detail.user._id
 					},
 					success: (res) => {
 						uni.showToast({
@@ -254,7 +254,7 @@
 					url: '/api/isFollow',
 					data: {
 						userId: that.userId,
-						followedUserId: that.detail.userId
+						followedUserId: that.detail.user._id
 					},
 					success: (res) => {
 						if(res.data.data.length > 0){

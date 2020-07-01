@@ -14,7 +14,7 @@ class FollowController extends Controller {
 			followedUser: ctx.request.body.followedUserId
 		}
 		
-		let result = await ctx.service.follow.follow(newFollow);
+		let result = await ctx.service.follow.addFollow(newFollow);
 		ctx.body = {'data': result};
 		
 	}
@@ -47,6 +47,21 @@ class FollowController extends Controller {
 		}
 		
 		let result = await ctx.service.follow.cancelFollow(newFollow);
+		ctx.body = {'data': result};
+		
+	}
+	
+	//查询我的关注
+	async findMyFollow() {
+		const {
+			ctx
+		} = this;
+	
+		let obj = {
+			userId: ctx.query.userId
+		}
+		
+		let result = await ctx.service.follow.findFollow(obj);
 		ctx.body = {'data': result};
 		
 	}
