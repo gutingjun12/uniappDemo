@@ -3,8 +3,8 @@ module.exports = app => {
   const Schema = mongoose.Schema;
 	
   const FollowSchema = new Schema({
-		userId: { type: String }, //操作者id
-		followedUserId: { type: String }, //被关注的用户id
+		user: { type: String, ref: 'User' }, //操作者信息
+		followedUser: { type: String, ref: 'User' }, //被关注的用户信息
 		createDate: { type: Date, default: Date.now } //关注时间
 		
   },{versionKey:false});

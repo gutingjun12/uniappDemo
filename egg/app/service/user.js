@@ -3,10 +3,10 @@
 const Service = require('egg').Service;
 
 class UserService extends Service {	
-	// 通过手机号查找用户
-	async findByPhone(phone) {
+	// 查找用户
+	async findUser(obj) {
 		const { ctx } = this;
-		return await ctx.model.User.findOne({'phone': phone});
+		return await ctx.model.User.find(obj);
 	}
 
 	//添加用户

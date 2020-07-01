@@ -3,9 +3,7 @@ module.exports = app => {
   const Schema = mongoose.Schema;
 	
   const ArticleSchema = new Schema({
-		userId: { type: String }, //作者id
-		userName: { type: String }, //作者名称
-		userAvatar: { type: String }, //作者头像
+		user: { type: String, ref: 'User', required:[true] }, //作者信息，传id
     title: { type: String }, //文章标题
     imgArr: { type: Array }, //文章图片
 		content: { type: String }, //文章内容

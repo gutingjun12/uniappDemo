@@ -14,12 +14,14 @@ class ArticleService extends Service {
 
 	}
 
-	//查询所有文章
+	//查询文章
 	async findArticle(obj) {
 		const {
 			ctx
 		} = this;
-		let res = await ctx.model.Article.find(obj);
+		
+		//根据userid 查找用户信息 populate('user')
+		let res = await ctx.model.Article.find(obj).populate('user');
 		let res1 = res.map(item => {
 			return {
 				'imgArr': item.imgArr,
@@ -27,9 +29,7 @@ class ArticleService extends Service {
 				'collected': item.collected,
 				'commentNum': item.commentNum,
 				'_id': item._id,
-				'userId': item.userId,
-				'userName': item.userName,
-				'userAvatar': item.userAvatar,
+				'user': item.user,
 				'title': item.title,
 				'content': item.content,
 				'createDate': ctx.helper.formatTime(item.createDate)
@@ -39,24 +39,6 @@ class ArticleService extends Service {
 
 	}
 	
-	//更改用户信息后更新文章里的用户信息
-	async updateByUserInfo(userId, obj) {
-		const {
-			ctx
-		} = this;
-		return await ctx.model.Article.updateMany({'userId': userId}, obj);
-	
-	}
-	
-	
-	//修改文章
-	async update(articleId, obj) {
-		const {
-			ctx
-		} = this;
-		return await ctx.model.Article.updateOne({'_id': articleId}, obj);
-	
-	}
 	
 
 }

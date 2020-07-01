@@ -11,15 +11,15 @@ class ArticleController extends Controller {
 		} = this;
 
 		let newArticle = {
-			userId: ctx.request.body.userId,
-			userName: ctx.request.body.userName,
-			userAvatar: ctx.request.body.userAvatar,
+			user: ctx.request.body.userId,
 			title: ctx.request.body.title,
 			imgArr: ctx.request.body.imgArr,
 			content: ctx.request.body.content
 		}
 		
+		// 添加文章
 		let result = await ctx.service.article.addArticle(newArticle);
+		
 		ctx.body = {'data': result};
 		
 	}
@@ -42,7 +42,7 @@ class ArticleController extends Controller {
 		} = this;
 		
 		let userId = ctx.query.userId;
-		let res = await ctx.service.article.findArticle({'userId': userId});
+		let res = await ctx.service.article.findArticle({'user': userId});
 		ctx.body = {'data': res};
 	
 	}

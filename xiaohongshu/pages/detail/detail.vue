@@ -8,15 +8,15 @@
 				<view class="back-btn" @click="back"><i class="iconfont iconleft"></i></view>
 				<!-- 头像 -->
 				<view class="avatar">
-					<img :src="detail.userAvatar" alt="">
+					<img :src="authorInfo.avatar" alt="">
 				</view>
 				<!-- 用户名 -->
-				<view class="user-name">{{detail.userName}}</view>
+				<view class="user-name">{{authorInfo.name}}</view>
 			</view>
 			<!-- 顶部右边 -->
 			<view class="r">
 				<!-- 关注按钮 -->
-				<button :type="followBtn=='关注'?'warn':'default'" size="mini" plain="true" class="follow" v-if="userId!=detail.userId"
+				<button :type="followBtn=='关注'?'warn':'default'" size="mini" plain="true" class="follow" v-if="userId!=authorInfo._id"
 				 @click="clickFollowBtn">{{followBtn}}</button>
 			</view>
 		</view>
@@ -116,6 +116,7 @@
 				userId: '', // 自己的用户id
 				articleId: '', //文章id
 				detail: {}, //文章详情
+				authorInfo: {}, //作者信息
 				imgArr: [],//轮播图
 				followBtn: '关注',
 				adjustPosition: true, //textarea上推内容
@@ -157,7 +158,8 @@
 					},
 					success: (res) => {
 						that.detail = res.data.data[0]
-						that.imgArr = that.detail.imgArr
+						that.authorInfo = res.data.data[0].user
+						that.imgArr = res.data.data[0].imgArr
 						
 						// 是否已关注该作者
 						that.isFollow()

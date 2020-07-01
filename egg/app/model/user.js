@@ -10,7 +10,8 @@ module.exports = app => {
 		avatar: {type: String, default: 'http://127.0.0.1:7001/public/avatar.jpg'}, //头像
 		fans: {type: Number, default: 0}, //粉丝数
 		follow: {type:Number, default: 0}, //关注人数
-		likedAndCollected: {type: Number, default: 0} //收到的点赞和收藏数量
+		liked: {type: Number, default: 0} ,//收到的点赞数量
+		collected: {type: Number, default: 0} ,//收藏数量
   },{versionKey:false});
 	
   return mongoose.model('User', UserSchema, 'users');

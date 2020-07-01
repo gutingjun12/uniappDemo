@@ -12,8 +12,8 @@ class UserController extends Controller {
 
 		// 用户登录手机号
 		let phone = ctx.request.body.phone;
-		let res = await ctx.service.user.findByPhone(phone);
-		if (!res) {
+		let res = await ctx.service.user.findUser({'phone': phone});
+		if (res.length==0) {
 			let phone = ctx.request.body.phone;
 			let newUser = {
 				name: '小红薯' + phone,
@@ -26,11 +26,22 @@ class UserController extends Controller {
 
 		} else {
 			ctx.body = {
-				'data': res
+				'data': res[0]
 			};
 		}
 
 	}
+	
+	//通过id查找用户
+	async findUserById() {
+		const {
+			ctx
+		} = this;
+
+		let res = await ctx.service.user.findUser({'_id': ctx.request.body.userId});
+		ctx.body = {'data': res};
+	}
+	
 	
 	// 更新用户信息
 	async updateUser() {
@@ -46,16 +57,7 @@ class UserController extends Controller {
 			area: ctx.request.body.area
 		}
 		
-		let newArticle = {
-			userName: ctx.request.body.userName,
-			userAvatar: ctx.request.body.avatar
-		}
-		
-		//更改文章里的用户信息
-		await ctx.service.article.updateByUserInfo(id, newArticle);
-		
 		let res = await ctx.service.user.updateUser(id, newObj);
-		
 		ctx.body = {'data': res};
 
 	}

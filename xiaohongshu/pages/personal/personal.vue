@@ -28,7 +28,7 @@
 						<view class="text">粉丝</view>
 					</view>
 					<view class="item">
-						<view class="num">{{userInfo.likedAndCollected}}</view>
+						<view class="num">{{userInfo.liked + userInfo.collected}}</view>
 						<view class="text">获赞与收藏</view>
 					</view>
 				</view>
@@ -65,9 +65,9 @@
 					<view class="user-info">
 						<view class="l">
 							<view class="avatar">
-								<img :src="item.userAvatar" alt="" />
+								<img :src="item.user.avatar" alt="" />
 							</view>
-							<view class="user-name">{{item.userName}}</view>
+							<view class="user-name">{{item.user.name}}</view>
 						</view>
 						<view class="r"><i class="iconfont iconheart"></i>{{item.liked}}</view>
 					</view>

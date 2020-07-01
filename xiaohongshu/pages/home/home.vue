@@ -33,9 +33,9 @@
 					<view class="user-info">
 						<view class="l">
 							<view class="avatar">
-								<img :src="item.userAvatar" alt="" />
+								<img :src="item.user.avatar" alt="" />
 							</view>
-							<view class="user-name">{{item.userName}}</view>
+							<view class="user-name">{{item.user.name}}</view>
 						</view>
 						<view class="r"><i class="iconfont iconheart"></i>{{item.liked}}</view>
 					</view>
