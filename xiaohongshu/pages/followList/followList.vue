@@ -18,13 +18,13 @@
 					<!-- 操作 -->
 					<view class="operate" v-if="flag==1">开始关注你了<text class="time">2020-6-3</text></view>
 					<!-- 用户笔记和粉丝数 -->
-					<view class="operate">笔记：10 | 粉丝：4</view>
+					<!-- <view class="operate">笔记：10 | 粉丝：4</view> -->
 				</view>
 				<!-- 右边 -->
 				<view class="r">
-					<button type="warn" size="mini" plain="true">回粉</button>
+					<!-- <button type="warn" size="mini" plain="true">回粉</button> -->
 					<button type="default" size="mini" plain="true">已关注</button>
-					<button type="default" size="mini" plain="true">互相关注</button>
+					<!-- <button type="default" size="mini" plain="true">互相关注</button> -->
 				</view>
 			</view>
 		</view>
@@ -128,9 +128,9 @@
 
 					.user-name {
 						width: 70%;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
+						// overflow: hidden;
+						// text-overflow: ellipsis;
+						// white-space: nowrap;
 						font-size: $uni-font-size-lg;
 					}
 				}
