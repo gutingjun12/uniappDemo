@@ -87,7 +87,7 @@
 
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/login',
+					url: '/api/login',
 					data: {
 						phone: that.phone,
 						code: that.code
@@ -113,26 +113,6 @@
 				});
 
 			},
-
-			//新增用户
-			// addNewUser() {
-			// 	const that = this
-			// 	uni.request({
-			// 		method: 'POST',
-			// 		url: 'http://127.0.0.1:7001/addUser',
-			// 		data: {
-			// 			phone: that.phone
-			// 		},
-			// 		success: (res) => {
-			// 			console.log('新增用户成功')
-			// 			that.login()
-			// 		},
-			// 		fail: (res) => {
-			// 			console.log('服务异常，请稍后重试')
-			// 		}
-			// 	});
-
-			// }
 
 		}
 	}

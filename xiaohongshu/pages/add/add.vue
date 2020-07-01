@@ -73,7 +73,7 @@
 					sourceType: ['album'], //从相册选择
 					success: function(res) {
 						uni.uploadFile({
-							url : 'http://127.0.0.1:7001/uploadFile',
+							url : '/api/uploadFile',
 							filePath: res.tempFiles[0].path,
 							name: 'file',
 							success: function(uploadFileRes) {
@@ -96,7 +96,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/addArticle',
+					url: '/api/addArticle',
 					data: {
 						userId: that.userId,
 						userName: that.userName,

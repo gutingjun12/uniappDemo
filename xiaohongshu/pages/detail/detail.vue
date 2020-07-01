@@ -85,21 +85,26 @@
 
 		<!-- 底部固定 -->
 		<view class="fixed-part">
-			<!-- 输入框 -->
-			<textarea placeholder="说点什么。。。" />
-			<!-- 点赞 -->
-			<view class="item"><i class="iconfont iconheart"></i>{{detail.liked}}</view>
-			<!-- 收藏 -->
-			<view class="item"><i class="iconfont iconstar"></i>{{detail.collected}}</view>
-			<!-- 评论 -->
-			<view class="item"><i class="iconfont iconmessage"></i>{{detail.commentNum}}</view>
+			<view class="fixed-part-box" v-show="!isFocus">
+				<!-- 输入框 -->
+				<input class="uni-input" placeholder="说点什么。。。" v-model="val" @click="focusFun" />
+				<!-- 点赞 -->
+				<view class="item"><i class="iconfont iconheart"></i>{{detail.liked}}</view>
+				<!-- 收藏 -->
+				<view class="item"><i class="iconfont iconstar"></i>{{detail.collected}}</view>
+				<!-- 评论 -->
+				<view class="item"><i class="iconfont iconmessage"></i>{{detail.commentNum}}</view>
+			</view>
+			<view class="fixed-part-box" v-show="isFocus">
+				<!-- 文本输入框 -->
+				<textarea placeholder="评论@哈哈" v-model="val" :focus="isFocus" :adjust-position="adjustPosition" :fixed="fixed" :auto-height="autoHeight"
+				 @blur="blurFun" />
+				<!-- 发送按钮 -->
+				<view class="item">
+					<button><i class="iconfont iconsend"></i></button>
+				</view>
+			</view>
 		</view>
-		
-		<!-- 弹出的输入框 -->
-		<view class="eject-textarea">
-			<textarea placeholder="@某人" fixed="true" adjust-position="false" auto-height="true" />
-		</view>
-		
 		
 	</view>
 </template>
@@ -113,6 +118,11 @@
 				detail: {}, //文章详情
 				imgArr: [],//轮播图
 				followBtn: '关注',
+				adjustPosition: true, //textarea上推内容
+				fixed: true, //textarea是否固定
+				autoHeight: true, //textarea自动高度
+				isFocus: false,// 是否聚焦
+				val: '', //输入内容
 			}
 		},
 		onLoad(option) {
@@ -141,7 +151,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/findByArticleId',
+					url: '/api/findByArticleId',
 					data: {
 						articleId: that.articleId
 					},
@@ -181,7 +191,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/follow',
+					url: '/api/follow',
 					data: {
 						userId: that.userId,
 						followedUserId: that.detail.userId
@@ -210,7 +220,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/cancelFollow',
+					url: '/api/cancelFollow',
 					data: {
 						userId: that.userId,
 						followedUserId: that.detail.userId
@@ -239,7 +249,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/isFollow',
+					url: '/api/isFollow',
 					data: {
 						userId: that.userId,
 						followedUserId: that.detail.userId
@@ -260,7 +270,19 @@
 					}
 				});
 				
-			}
+			},
+			
+			//点击input
+			focusFun() {
+				const that = this
+				that.isFocus = true
+			},
+			
+			//文本输入框失焦
+			blurFun() {
+				const that = this
+				that.isFocus = false
+			},
 			
 			
 		}
@@ -437,35 +459,53 @@
 			left: 0;
 			z-index: 999;
 			width: 100%;
-			display: flex;
-			align-items: center;
-			background: #fff;
-			border-top: 2rpx solid $uni-border-color;
-			padding: 20rpx;
-			textarea {
-				flex: 3;
-				height: 60rpx;
-				padding: 10rpx;
-				border-radius: $uni-border-radius-lg;
-				font-size: $uni-font-size-sm;
-				border: 2rpx solid $uni-border-color;
-				background: $uni-bg-color-grey;
+			
+			.fixed-part-box {
+				display: flex;
+				align-items: center;
+				background: #fff;
+				border-top: 2rpx solid $uni-border-color;
+				padding: 20rpx;
+				
+				.uni-input {
+					flex: 4;
+					height: 60rpx;
+					padding: 0 20rpx;
+					border-radius: $uni-border-radius-lg;
+					font-size: $uni-font-size-base;
+					border: 2rpx solid $uni-border-color;
+					background: $uni-bg-color-grey;
+				}
+				
+				textarea {
+					flex: 4;
+					line-height: 60rpx;
+					padding: 0 20rpx;
+					border-radius: $uni-border-radius-lg;
+					font-size: $uni-font-size-base;
+					border: 2rpx solid $uni-border-color;
+					background: $uni-bg-color-grey;
+				}
+				
+				.item {
+					flex: 1;
+					font-size: $uni-font-size-base;
+					text-align: center;
+					
+					button {
+						width: 80%;
+						padding: 10rpx 0;
+						line-height: normal;
+						background: $uni-color-theme;
+						color: #fff
+					}
+					
+				}
+				
 			}
-			.item {
-				flex: 1;
-				font-size: $uni-font-size-base;
-				text-align: center;
-			}
+
 		}
 		
-		.eject-textarea {
-			border: 1px solid black;
-			
-			textarea {
-				width: 100%;
-				border: 1px solid pink;
-			}
-		}
 		
 	}
 </style>

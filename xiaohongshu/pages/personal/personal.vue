@@ -156,7 +156,7 @@
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/findArticlesByUserId',
+					url: '/api/findArticlesByUserId',
 					data: {
 						userId: that.userInfo._id
 					},
@@ -182,7 +182,7 @@
 					sourceType: ['album'], //从相册选择
 					success: function(res) {
 						uni.uploadFile({
-							url: 'http://127.0.0.1:7001/uploadFile',
+							url: '/api/uploadFile',
 							filePath: res.tempFiles[0].path,
 							name: 'file',
 							success: function(uploadFileRes) {
@@ -217,7 +217,7 @@
 				const that = this
 				uni.request({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/updateUser',
+					url: '/api/updateUser',
 					data: {
 						userId: that.userInfo._id,
 						userName: that.userName,
