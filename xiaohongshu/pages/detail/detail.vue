@@ -257,7 +257,7 @@
 						followedUserId: that.detail.userId
 					},
 					success: (res) => {
-						if(res.data.data){
+						if(res.data.data.length > 0){
 							that.followBtn = '已关注'
 						}else{
 							that.followBtn = '关注'
@@ -385,6 +385,7 @@
 
 				.content {
 					line-height: 48rpx;
+					word-break: break-word;
 				}
 
 				.time {

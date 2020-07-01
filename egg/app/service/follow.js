@@ -19,7 +19,7 @@ class FollowService extends Service {
 		const {
 			ctx
 		} = this;
-		return await ctx.model.Follow.findOne(obj);
+		return await ctx.model.Follow.find(obj).populate('followedUser');
 	
 	}
 	

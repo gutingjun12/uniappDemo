@@ -11,7 +11,7 @@ class FollowController extends Controller {
 	
 		let newFollow = {
 			userId: ctx.request.body.userId,
-			followedUserId: ctx.request.body.followedUserId
+			followedUser: ctx.request.body.followedUserId
 		}
 		
 		let result = await ctx.service.follow.follow(newFollow);
@@ -19,7 +19,7 @@ class FollowController extends Controller {
 		
 	}
 	
-	//是否关注
+	//是否关注某个人
 	async isFollow() {
 		const {
 			ctx
@@ -27,7 +27,7 @@ class FollowController extends Controller {
 	
 		let obj = {
 			userId: ctx.request.body.userId,
-			followedUserId: ctx.request.body.followedUserId
+			followedUser: ctx.request.body.followedUserId
 		}
 		
 		let result = await ctx.service.follow.findFollow(obj);
@@ -43,7 +43,7 @@ class FollowController extends Controller {
 	
 		let newFollow = {
 			userId: ctx.request.body.userId,
-			followedUserId: ctx.request.body.followedUserId
+			followedUser: ctx.request.body.followedUserId
 		}
 		
 		let result = await ctx.service.follow.cancelFollow(newFollow);
