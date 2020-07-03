@@ -97,11 +97,11 @@
 			</view>
 			<view class="fixed-part-box" v-show="isFocus">
 				<!-- 文本输入框 -->
-				<textarea placeholder="评论@哈哈" v-model="val" :focus="isFocus" :adjust-position="adjustPosition" :fixed="fixed" :auto-height="autoHeight"
-				 @blur="blurFun" />
+				<textarea :placeholder="'评论@' + placeholderText" v-model="val" :focus="isFocus" :adjust-position="adjustPosition" :fixed="fixed"
+				 :auto-height="autoHeight" @blur="blurFun" />
 				<!-- 发送按钮 -->
 				<view class="item">
-					<button><i class="iconfont iconsend"></i></button>
+					<button @mousedown="comment(0, detail.user._id)"><i class="iconfont iconsend"></i></button>
 				</view>
 			</view>
 		</view>
@@ -124,6 +124,7 @@
 				autoHeight: true, //textarea自动高度
 				isFocus: false,// 是否聚焦
 				val: '', //输入内容
+				placeholderText: '', //placeHolder 内容
 			}
 		},
 		onLoad(option) {
@@ -163,6 +164,9 @@
 						
 						// 是否已关注该作者
 						that.isFollow()
+						
+						//获取评论
+						that.getComments()
 
 					},
 					fail: (res) => {
@@ -278,12 +282,66 @@
 			focusFun() {
 				const that = this
 				that.isFocus = true
+				that.placeholderText = that.detail.user.name
 			},
 			
 			//文本输入框失焦
 			blurFun() {
 				const that = this
 				that.isFocus = false
+			},
+			
+			//提交评论
+			comment(parentId, toUserId) {
+				const that = this
+				uni.request({
+					method: 'POST',
+					url: '/api/addComment',
+					data: {
+						articleId: that.articleId,
+						parentId: parentId,
+						content: that.val,
+						fromUserId: that.userId,
+						toUserId: toUserId
+					},
+					success: (res) => {
+						console.log(res.data)
+						//获取评论
+						that.getComments()
+						that.val = ''
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			},
+			
+			//获取评论
+			getComments() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: '/api/findComment',
+					data: {
+						articleId: that.articleId
+					},
+					success: (res) => {
+						console.log(res.data)
+					
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+				
 			},
 			
 			

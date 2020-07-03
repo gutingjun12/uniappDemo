@@ -29,7 +29,8 @@ module.exports = app => {
 	//通过文章id查找文章
 	router.get('/findByArticleId', controller.article.findByArticleId);
 	
-	//关注
+	/* 关注 */
+	//添加关注
 	router.post('/follow', controller.follow.follow);
 	//是否已关注该用户
 	router.post('/isFollow', controller.follow.isFollow);
@@ -40,5 +41,13 @@ module.exports = app => {
 	
 	//点赞
 	router.post('/like', controller.like.like);
+	
+	
+	/* 评论 */
+	// 添加评论
+	router.post('/addComment', controller.comment.addComment);
+	//获取评论
+	router.get('/findComment', controller.comment.findComment);
+	
 	
 };
