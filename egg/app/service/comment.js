@@ -32,6 +32,7 @@ class CommentService extends Service {
 				'createDate': ctx.helper.formatTime(item.createDate)
 			}
 		});
+		
 		return res1;
 	
 	}

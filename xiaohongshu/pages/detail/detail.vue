@@ -53,19 +53,19 @@
 						<view class="like"><i class="iconfont iconheart"></i>0</view>
 					</view>
 					<!-- 内容 -->
-					<view class="comment-text" @click="reply(item._id, item.fromUser.name)">{{item.content}}<text class="time">{{item.createDate}}</text></view>
+					<view class="comment-text" @click="reply(item._id, item.fromUser.name, item.fromUser._id)">{{item.content}}<text class="time">{{item.createDate}}</text></view>
 					<!-- 回复区 -->
-					<view class="reply">
+					<view class="reply" v-for="(item2, index2) in item.child" :key="index2">
 						<!-- 用户信息 -->
 						<view class="user-info">
 							<view class="avatar">
-								<img src="/static/logo.png" alt="">
+								<img :src="item2.fromUser.avatar" alt="">
 							</view>
-							<view class="user-name">别人哈哈哈</view>
-							<view class="like"><i class="iconfont iconheart"></i>20</view>
+							<view class="user-name">{{item2.fromUser.name}}</view>
+							<view class="like"><i class="iconfont iconheart"></i>0</view>
 						</view>
 						<!-- 内容 -->
-						<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
+						<view class="comment-text">{{item2.content}}<text class="time">{{item2.createDate}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -89,7 +89,7 @@
 				 :auto-height="autoHeight" @blur="blurFun" />
 				<!-- 发送按钮 -->
 				<view class="item">
-					<button @mousedown="comment(parentId, detail.user._id)"><i class="iconfont iconsend"></i></button>
+					<button @mousedown="comment(parentId, toUserId)"><i class="iconfont iconsend"></i></button>
 				</view>
 			</view>
 		</view>
@@ -114,6 +114,7 @@
 				val: '', //输入内容
 				placeholderText: '', //placeHolder 内容
 				parentId: 0, //评论哪条 默认0
+				toUserId: '',// 评论谁
 				commentArr: [], //评论列表
 			}
 		},
@@ -274,6 +275,7 @@
 				that.isFocus = true
 				that.placeholderText = that.detail.user.name
 				that.parentId = 0
+				that.toUserId = that.detail.user._id
 			},
 			
 			//文本输入框失焦
@@ -283,11 +285,12 @@
 			},
 			
 			//回复评论
-			reply(parentId, userName) {
+			reply(parentId, userName, toUserId) {
 				const that = this
 				that.isFocus = true
 				that.parentId = parentId
 				that.placeholderText = userName
+				that.toUserId = toUserId
 			},
 			
 			//提交评论
@@ -480,6 +483,8 @@
 
 							img {
 								width: 100%;
+								height: 100%;
+								object-fit: cover;
 							}
 						}
 

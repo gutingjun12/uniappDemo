@@ -17,25 +17,45 @@ class CommentController extends Controller {
 			fromUser: ctx.request.body.fromUserId,
 			toUser: ctx.request.body.toUserId
 		}
-		let result = await ctx.service.comment.addComment(newComment);
-		ctx.body = {'data': result};
 		
+		let result = await ctx.service.comment.addComment(newComment);
+		ctx.body = {
+			'data': result
+		};
+
 	}
-	
-	
+
+
 	//通过文章id查找文章评论
 	async findComment() {
 		const {
 			ctx
 		} = this;
-		
+
 		let articleId = ctx.query.articleId;
-		let res = await ctx.service.comment.findComment({'articleId': articleId});
-		ctx.body = {'data': res};
-	
+		let res = await ctx.service.comment.findComment({
+			'articleId': articleId
+		});
+		
+		// let arr1 = [];
+		// let arr2 = [];
+		// res.forEach(function(item) {
+		// 	if(item.parentId == '0') {
+		// 		arr1.push(item);
+		// 	}else {
+		// 		arr2.push(item);
+		// 	}
+		// });
+		
+		
+		
+		ctx.body = {
+			'data': res
+		};
+
 	}
-	
-	
+
+
 
 }
 
