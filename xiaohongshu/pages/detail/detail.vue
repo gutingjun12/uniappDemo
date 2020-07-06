@@ -43,17 +43,17 @@
 			<view class="total">共{{detail.commentNum}}条评论</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
-				<view class="item">
+				<view class="item" v-for="(item, index) in commentArr" :key="index">
 					<!-- 用户信息 -->
 					<view class="user-info">
 						<view class="avatar">
-							<img src="/static/logo.png" alt="">
+							<img :src="item.fromUser.avatar" alt="">
 						</view>
-						<view class="user-name">别人哈哈哈</view>
-						<view class="like"><i class="iconfont iconheart"></i>20</view>
+						<view class="user-name">{{item.fromUser.name}}</view>
+						<view class="like"><i class="iconfont iconheart"></i>0</view>
 					</view>
 					<!-- 内容 -->
-					<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
+					<view class="comment-text" @click="reply(item._id, item.fromUser.name)">{{item.content}}<text class="time">{{item.createDate}}</text></view>
 					<!-- 回复区 -->
 					<view class="reply">
 						<!-- 用户信息 -->
@@ -68,21 +68,9 @@
 						<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
 					</view>
 				</view>
-				<view class="item">
-					<!-- 用户信息 -->
-					<view class="user-info">
-						<view class="avatar">
-							<img src="/static/logo.png" alt="">
-						</view>
-						<view class="user-name">别人哈哈哈</view>
-						<view class="like"><i class="iconfont iconheart"></i>20</view>
-					</view>
-					<!-- 内容 -->
-					<view class="comment-text">up主好棒！<text class="time">昨晚 23:30</text></view>
-				</view>
 			</view>
 		</view>
-
+		
 		<!-- 底部固定 -->
 		<view class="fixed-part">
 			<view class="fixed-part-box" v-show="!isFocus">
@@ -101,7 +89,7 @@
 				 :auto-height="autoHeight" @blur="blurFun" />
 				<!-- 发送按钮 -->
 				<view class="item">
-					<button @mousedown="comment(0, detail.user._id)"><i class="iconfont iconsend"></i></button>
+					<button @mousedown="comment(parentId, detail.user._id)"><i class="iconfont iconsend"></i></button>
 				</view>
 			</view>
 		</view>
@@ -125,6 +113,8 @@
 				isFocus: false,// 是否聚焦
 				val: '', //输入内容
 				placeholderText: '', //placeHolder 内容
+				parentId: 0, //评论哪条 默认0
+				commentArr: [], //评论列表
 			}
 		},
 		onLoad(option) {
@@ -283,12 +273,21 @@
 				const that = this
 				that.isFocus = true
 				that.placeholderText = that.detail.user.name
+				that.parentId = 0
 			},
 			
 			//文本输入框失焦
 			blurFun() {
 				const that = this
 				that.isFocus = false
+			},
+			
+			//回复评论
+			reply(parentId, userName) {
+				const that = this
+				that.isFocus = true
+				that.parentId = parentId
+				that.placeholderText = userName
 			},
 			
 			//提交评论
@@ -330,7 +329,7 @@
 						articleId: that.articleId
 					},
 					success: (res) => {
-						console.log(res.data)
+						that.commentArr = res.data.data
 					
 					},
 					fail: (res) => {
@@ -520,12 +519,12 @@
 			left: 0;
 			z-index: 999;
 			width: 100%;
+			background: #fff;
+			border-top: 2rpx solid $uni-border-color;
 			
 			.fixed-part-box {
 				display: flex;
 				align-items: center;
-				background: #fff;
-				border-top: 2rpx solid $uni-border-color;
 				padding: 20rpx;
 				
 				.uni-input {

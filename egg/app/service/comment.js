@@ -20,9 +20,10 @@ class CommentService extends Service {
 			ctx
 		} = this;
 		
-		let res = await ctx.model.Comment.find(obj).populate('user');
+		let res = await ctx.model.Comment.find(obj).populate(['fromUser','toUser']);
 		let res1 = res.map(item => {
 			return {
+				'_id': item._id,
 				'articleId': item.articleId,
 				'parentId': item.parentId,
 				'content': item.content,
