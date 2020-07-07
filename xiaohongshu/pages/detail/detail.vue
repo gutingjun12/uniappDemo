@@ -40,9 +40,14 @@
 		<!-- 评论区 -->
 		<view class="comment">
 			<!-- 评论总数 -->
-			<view class="total">共{{detail.commentNum}}条评论</view>
+			<view class="total">共{{commentArr.length}}条评论</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
+				<view class="no-data" v-if="commentArr.length==0">
+					<i class="iconfont iconzanwushuju1"></i>
+					<view>暂无评论</view>
+				</view>
+
 				<view class="item" v-for="(item, index) in commentArr" :key="index">
 					<!-- 用户信息 -->
 					<view class="user-info">
@@ -464,6 +469,20 @@
 			}
 
 			.comment-list {
+				.no-data {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					height: 50vh;
+					color: $uni-text-color-grey;
+					
+					.iconfont {
+						font-size: 80rpx;
+						color: #dbdbdb;
+						margin-bottom: 20rpx;
+					}
+				}
 				.item {
 					padding: 30rpx 0;
 					border-bottom: 2rpx solid $uni-border-color;

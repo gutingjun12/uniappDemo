@@ -20,7 +20,7 @@
 			<view class="r">
 				<view class="r-top">
 					<view class="item" @click="goUrl(1)">
-						<view class="num">{{userInfo.follow}}</view>
+						<view class="num">{{followCount}}</view>
 						<view class="text">关注</view>
 					</view>
 					<view class="item">
@@ -126,6 +126,7 @@
 		data() {
 			return {
 				userInfo: {}, //用户信息
+				followCount: 0, // 关注人数
 				articleArr: [], //我的笔记
 				userAvatar: '', //编辑中的头像
 				userName: '', //编辑中用户名
@@ -151,6 +152,27 @@
 
 		},
 		methods: {
+			//获取关注人数
+			getFollowCount() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: '/api/findMyFollow',
+					data: {
+						userId: that.userInfo._id
+					},
+					success: (res) => {
+						that.followCount = res.data.data.length
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			},
 			//获取个人笔记
 			getMyArticles() {
 				const that = this
@@ -162,6 +184,7 @@
 					},
 					success: (res) => {
 						that.articleArr = res.data.data
+						that.getFollowCount()
 					},
 					fail: (res) => {
 						uni.showToast({
