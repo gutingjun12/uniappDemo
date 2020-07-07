@@ -38,13 +38,13 @@
 						path = '../../pages/shop/shop'
 						break;
 					case 2:
-						path = uni.getStorageSync('userInfo') ? '../../pages/add/add' : '../../pages/login/login'
+						path = '../../pages/add/add'
 						break;
 					case 3:
-						path = uni.getStorageSync('userInfo') ? '../../pages/message/message' : '../../pages/login/login'
+						path = '../../pages/message/message'
 						break;
 					case 4:
-						path = uni.getStorageSync('userInfo') ? '../../pages/personal/personal' : '../../pages/login/login'
+						path = '../../pages/personal/personal'
 						break;
 				}
 				uni.reLaunch({

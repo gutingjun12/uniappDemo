@@ -56,6 +56,8 @@ class CommentController extends Controller {
 				}
 			});
 			
+			child = [];
+			
 		});
 		
 		

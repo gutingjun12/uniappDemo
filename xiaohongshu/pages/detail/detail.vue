@@ -53,7 +53,8 @@
 						<view class="like"><i class="iconfont iconheart"></i>0</view>
 					</view>
 					<!-- 内容 -->
-					<view class="comment-text" @click="reply(item._id, item.fromUser.name, item.fromUser._id)">{{item.content}}<text class="time">{{item.createDate}}</text></view>
+					<view class="comment-text" @click="reply(item._id, item.fromUser.name, item.fromUser._id)">{{item.content}}<text
+						 class="time">{{item.createDate}}</text></view>
 					<!-- 回复区 -->
 					<view class="reply" v-for="(item2, index2) in item.child" :key="index2">
 						<!-- 用户信息 -->
@@ -70,7 +71,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 底部固定 -->
 		<view class="fixed-part">
 			<view class="fixed-part-box" v-show="!isFocus">
@@ -85,8 +86,8 @@
 			</view>
 			<view class="fixed-part-box" v-show="isFocus">
 				<!-- 文本输入框 -->
-				<textarea :placeholder="'评论@' + placeholderText" v-model="val" :focus="isFocus" :adjust-position="adjustPosition" :fixed="fixed"
-				 :auto-height="autoHeight" @blur="blurFun" />
+				<textarea :placeholder="'评论@' + placeholderText" v-model="val" :focus="isFocus" :adjust-position="adjustPosition"
+				 :fixed="fixed" :auto-height="autoHeight" @blur="blurFun" />
 				<!-- 发送按钮 -->
 				<view class="item">
 					<button @mousedown="comment(parentId, toUserId)"><i class="iconfont iconsend"></i></button>
@@ -175,12 +176,9 @@
 				const that = this
 				if(that.followBtn == '关注'){
 					that.follow()
-					
 				}else if(that.followBtn == '已关注') {
 					that.cancelFollow()
-					
 				}
-				
 			},
 			
 			//关注
