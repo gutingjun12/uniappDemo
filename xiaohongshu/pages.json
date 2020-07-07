@@ -33,12 +33,15 @@
 		}, {
 			"path": "pages/searchList/searchList",
 			"style": {}
+		}, {
+			"path": "pages/fanList/fanList",
+			"style": {}
 		}
 	],
 	"globalStyle": {
 		"navigationStyle": "custom"
 	},
 	"tabBar": {
-		
+
 	}
 }

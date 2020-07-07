@@ -19,7 +19,16 @@ class FollowService extends Service {
 		const {
 			ctx
 		} = this;
-		return await ctx.model.Follow.find(obj).populate('followedUser');
+		let res = await ctx.model.Follow.find(obj).populate(['follower', 'beFollowed']);
+		let res1 = res.map(item => {
+			return {
+				'_id': item._id,
+				'follower': item.follower,
+				'beFollowed': item.beFollowed,
+				'createDate': ctx.helper.formatTime(item.createDate)
+			}
+		});
+		return res1;
 	
 	}
 	

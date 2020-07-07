@@ -1,5 +1,5 @@
 <template>
-	<view class="follow-list">
+	<view class="fan-list">
 		<!-- 顶部导航 -->
 		<navBar :navTitle="navTitle"></navBar>
 
@@ -11,15 +11,16 @@
 					<!-- 用户信息 -->
 					<view class="user-info">
 						<view class="avatar">
-							<img :src="item.beFollowed.avatar" alt="">
+							<img :src="item.follower.avatar" alt="">
 						</view>
-						<view class="user-name">{{item.beFollowed.name}}</view>
+						<view class="user-name">{{item.follower.name}}</view>
 					</view>
+					<!-- 操作 -->
+					<view class="operate">开始关注你了<text class="time">{{item.createDate}}</text></view>
 				</view>
 				<!-- 右边 -->
 				<view class="r">
-					<!-- <button type="warn" size="mini" plain="true">回粉</button> -->
-					<button type="default" size="mini" plain="true">已关注</button>
+					<button type="warn" size="mini" plain="true">回粉</button>
 					<!-- <button type="default" size="mini" plain="true">互相关注</button> -->
 				</view>
 			</view>
@@ -36,9 +37,9 @@
 		},
 		data() {
 			return {
-				navTitle: '我的关注',
+				navTitle: '我的粉丝',
 				userId: '', // 我的id
-				listArr: [], //关注列表
+				listArr: [], //粉丝列表
 			}
 		},
 		onLoad(options) {
@@ -48,20 +49,20 @@
 				key: 'userInfo',
 				success: function(res) {
 					that.userId = JSON.parse(res.data)._id
+					that.getMyFans()
 				}
 			})
 			
-			that.getMyFollow()
 		},
-		methods: {
-			//获取我的关注
-			getMyFollow() {
+		methods: {			
+			//获取我的粉丝
+			getMyFans() {
 				const that = this
 				uni.request({
 					method: 'GET',
-					url: '/api/findMyFollow',
+					url: '/api/findMyFans',
 					data: {
-						follower: that.userId
+						beFollowed: that.userId
 					},
 					success: (res) => {
 						that.listArr = res.data.data
@@ -81,7 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
-.follow-list {
+.fan-list {
 	.list {
 		padding: 88rpx 0 0 0;
 

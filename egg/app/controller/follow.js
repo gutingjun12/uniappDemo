@@ -10,8 +10,8 @@ class FollowController extends Controller {
 		} = this;
 	
 		let newFollow = {
-			userId: ctx.request.body.userId,
-			followedUser: ctx.request.body.followedUserId
+			follower: ctx.request.body.follower,
+			beFollowed: ctx.request.body.beFollowed
 		}
 		
 		let result = await ctx.service.follow.addFollow(newFollow);
@@ -26,8 +26,8 @@ class FollowController extends Controller {
 		} = this;
 	
 		let obj = {
-			userId: ctx.request.body.userId,
-			followedUser: ctx.request.body.followedUserId
+			follower: ctx.request.body.follower,
+			beFollowed: ctx.request.body.beFollowed
 		}
 		
 		let result = await ctx.service.follow.findFollow(obj);
@@ -42,8 +42,8 @@ class FollowController extends Controller {
 		} = this;
 	
 		let newFollow = {
-			userId: ctx.request.body.userId,
-			followedUser: ctx.request.body.followedUserId
+			follower: ctx.request.body.follower,
+			beFollowed: ctx.request.body.beFollowed
 		}
 		
 		let result = await ctx.service.follow.cancelFollow(newFollow);
@@ -58,7 +58,22 @@ class FollowController extends Controller {
 		} = this;
 	
 		let obj = {
-			userId: ctx.query.userId
+			follower: ctx.query.follower
+		}
+		
+		let result = await ctx.service.follow.findFollow(obj);
+		ctx.body = {'data': result};
+		
+	}
+	
+	//查询我的粉丝
+	async findMyFans() {
+		const {
+			ctx
+		} = this;
+	
+		let obj = {
+			beFollowed: ctx.query.beFollowed
 		}
 		
 		let result = await ctx.service.follow.findFollow(obj);

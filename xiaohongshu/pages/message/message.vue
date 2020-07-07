@@ -9,7 +9,7 @@
 			</view>
 			<view class="item" @click="goPage(1)">
 				<img src="../../static/logo.png" alt="">
-				<view class="text">新增关注</view>
+				<view class="text">新增粉丝</view>
 				<text class="badge">2</text>
 			</view>
 			<view class="item" @click="goPage(2)">

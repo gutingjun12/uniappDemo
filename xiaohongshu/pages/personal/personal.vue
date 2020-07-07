@@ -23,8 +23,8 @@
 						<view class="num">{{followCount}}</view>
 						<view class="text">关注</view>
 					</view>
-					<view class="item">
-						<view class="num">{{userInfo.fans}}</view>
+					<view class="item"  @click="goUrl(2)">
+						<view class="num">{{fansCount}}</view>
 						<view class="text">粉丝</view>
 					</view>
 					<view class="item">
@@ -54,7 +54,7 @@
 		<view class="main">
 			<!-- 列表 -->
 			<view class="list">
-				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goUrl(2, item._id)">
+				<view class="item" v-for="(item, index) in articleArr" :key="index" @click="goUrl(3, item._id)">
 					<!-- 图片或视频 -->
 					<view class="img-box" v-if="item.imgArr.length>0">
 						<img :src="item.imgArr[0]" alt="">
@@ -127,6 +127,7 @@
 			return {
 				userInfo: {}, //用户信息
 				followCount: 0, // 关注人数
+				fansCount: 0, //粉丝人数
 				articleArr: [], //我的笔记
 				userAvatar: '', //编辑中的头像
 				userName: '', //编辑中用户名
@@ -145,10 +146,11 @@
 					that.userName = that.userInfo.name
 					that.userSex = that.userInfo.sex
 					that.userArea = that.userInfo.area
+					that.getMyArticles()
+					that.getFollowCount()
+					that.getFansCount()
 				}
 			});
-
-			that.getMyArticles()
 
 		},
 		methods: {
@@ -159,7 +161,7 @@
 					method: 'GET',
 					url: '/api/findMyFollow',
 					data: {
-						userId: that.userInfo._id
+						follower: that.userInfo._id
 					},
 					success: (res) => {
 						that.followCount = res.data.data.length
@@ -173,6 +175,29 @@
 				});
 				
 			},
+			
+			//获取粉丝人数
+			getFansCount() {
+				const that = this
+				uni.request({
+					method: 'GET',
+					url: '/api/findMyFans',
+					data: {
+						beFollowed: that.userInfo._id
+					},
+					success: (res) => {
+						that.fansCount = res.data.data.length
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: '服务异常，请稍后重试',
+							icon: 'none'
+						})
+					}
+				});
+				
+			},
+			
 			//获取个人笔记
 			getMyArticles() {
 				const that = this
@@ -184,7 +209,7 @@
 					},
 					success: (res) => {
 						that.articleArr = res.data.data
-						that.getFollowCount()
+						
 					},
 					fail: (res) => {
 						uni.showToast({
@@ -289,9 +314,12 @@
 				let url = ''
 				switch(num) {
 					case 1:
-						url = '../followList/followList?flag=0'
+						url = '../followList/followList'
 						break;
 					case 2:
+						url = '../fanList/fanList'
+						break;	
+					case 3:
 						url = '../detail/detail?articleId=' + params
 						break;
 				}

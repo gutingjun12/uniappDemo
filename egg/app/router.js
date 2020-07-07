@@ -38,6 +38,9 @@ module.exports = app => {
 	router.post('/cancelFollow', controller.follow.cancelFollow);
 	//查询我的关注
 	router.get('/findMyFollow', controller.follow.findMyFollow);
+	//查询我的粉丝
+	router.get('/findMyFans', controller.follow.findMyFans);
+	
 	
 	//点赞
 	router.post('/like', controller.like.like);
