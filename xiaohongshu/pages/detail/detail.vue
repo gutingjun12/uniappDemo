@@ -501,6 +501,7 @@
 					.comment-text {
 						padding: 10rpx 0 10rpx 50rpx;
 						line-height: 48rpx;
+						word-wrap: break-word;
 
 						.time {
 							font-size: $uni-font-size-sm;

@@ -37,20 +37,31 @@ class CommentController extends Controller {
 			'articleId': articleId
 		});
 		
-		// let arr1 = [];
-		// let arr2 = [];
-		// res.forEach(function(item) {
-		// 	if(item.parentId == '0') {
-		// 		arr1.push(item);
-		// 	}else {
-		// 		arr2.push(item);
-		// 	}
-		// });
+		let arr1 = [];
+		let arr2 = [];
+		res.forEach(function(item) {
+			if(item.parentId == '0') {
+				arr1.push(item);
+			}else {
+				arr2.push(item);
+			}
+		});
+		
+		var child = [];
+		arr2.forEach(function(item2) {
+			arr1.forEach(function(item1) {
+				if(item2.parentId == item1._id) {
+					child.push(item2);
+					item1.child = child;
+				}
+			});
+			
+		});
 		
 		
 		
 		ctx.body = {
-			'data': res
+			'data': arr1
 		};
 
 	}
