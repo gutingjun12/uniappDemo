@@ -193,8 +193,8 @@
 					method: 'POST',
 					url: '/api/follow',
 					data: {
-						userId: that.userId,
-						followedUserId: that.detail.user._id
+						follower: that.userId,
+						beFollowed: that.detail.user._id
 					},
 					success: (res) => {
 						uni.showToast({
@@ -222,8 +222,8 @@
 					method: 'POST',
 					url: '/api/cancelFollow',
 					data: {
-						userId: that.userId,
-						followedUserId: that.detail.user._id
+						follower: that.userId,
+						beFollowed: that.detail.user._id
 					},
 					success: (res) => {
 						uni.showToast({
@@ -251,8 +251,8 @@
 					method: 'POST',
 					url: '/api/isFollow',
 					data: {
-						userId: that.userId,
-						followedUserId: that.detail.user._id
+						follower: that.userId,
+						beFollowed: that.detail.user._id
 					},
 					success: (res) => {
 						if(res.data.data.length > 0){
