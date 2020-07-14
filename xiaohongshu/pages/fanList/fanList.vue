@@ -25,6 +25,12 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- 没数据时 -->
+		<view class="no-data" v-if="listArr.length==0">
+			<i class="iconfont iconzanwushuju1"></i>
+			<view>暂无粉丝</view>
+		</view>
 
 	</view>
 </template>
@@ -142,6 +148,20 @@
 					
 				}
 			}
+		}
+	}
+	.no-data {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 50vh;
+		color: $uni-text-color-grey;
+		
+		.iconfont {
+			font-size: 80rpx;
+			color: #dbdbdb;
+			margin-bottom: 20rpx;
 		}
 	}
 }

@@ -65,7 +65,7 @@
 						url = '../likeList/likeList'
 						break;
 					case 1:
-						url = '../followList/followList?flag=1'
+						url = '../fanList/fanList'
 						break;
 					case 2:
 						url = '../commentList/commentList'
