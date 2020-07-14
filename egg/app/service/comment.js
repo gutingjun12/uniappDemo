@@ -29,7 +29,8 @@ class CommentService extends Service {
 				'content': item.content,
 				'fromUser': item.fromUser,
 				'toUser': item.toUser,
-				'createDate': ctx.helper.formatTime(item.createDate)
+				'createDate': ctx.helper.formatTime(item.createDate),
+				'child': item.child
 			}
 		});
 		

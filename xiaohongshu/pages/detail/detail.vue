@@ -40,10 +40,10 @@
 		<!-- 评论区 -->
 		<view class="comment">
 			<!-- 评论总数 -->
-			<view class="total">共{{commentArr.length}}条评论</view>
+			<view class="total">共{{totals}}条评论</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
-				<view class="no-data" v-if="commentArr.length==0">
+				<view class="no-data" v-if="totals==0">
 					<i class="iconfont iconzanwushuju1"></i>
 					<view>暂无评论</view>
 				</view>
@@ -87,7 +87,7 @@
 				<!-- 收藏 -->
 				<view class="item"><i class="iconfont iconstar"></i>{{detail.collected}}</view>
 				<!-- 评论 -->
-				<view class="item"><i class="iconfont iconmessage"></i>{{detail.commentNum}}</view>
+				<view class="item"><i class="iconfont iconmessage"></i>{{totals}}</view>
 			</view>
 			<view class="fixed-part-box" v-show="isFocus">
 				<!-- 文本输入框 -->
@@ -122,6 +122,7 @@
 				parentId: 0, //评论哪条 默认0
 				toUserId: '',// 评论谁
 				commentArr: [], //评论列表
+				totals: 0, //评论总数
 			}
 		},
 		onLoad(option) {
@@ -336,7 +337,7 @@
 					},
 					success: (res) => {
 						that.commentArr = res.data.data
-					
+						that.totals = res.data.totals
 					},
 					fail: (res) => {
 						uni.showToast({

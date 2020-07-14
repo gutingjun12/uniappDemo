@@ -47,16 +47,13 @@ class CommentController extends Controller {
 			}
 		});
 		
-		var child = [];
+
 		arr2.forEach(function(item2) {
 			arr1.forEach(function(item1) {
 				if(item2.parentId == item1._id) {
-					child.push(item2);
-					item1.child = child;
+					item1.child.push(item2);
 				}
 			});
-			
-			child = [];
 			
 		});
 		
