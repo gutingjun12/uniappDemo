@@ -60,7 +60,8 @@ class CommentController extends Controller {
 		
 		
 		ctx.body = {
-			'data': arr1
+			'data': arr1,
+			'totals': res.length
 		};
 
 	}
